@@ -1,0 +1,44 @@
+[TEST_SUITE test_tolower]
+[TEST_BODY]
+    LDB     $1,char
+    PUSHJ   $0,:char:tolower
+    STB     $0,actual_value
+    [EXPECT_BYTE_EQ actual_value,expected_value]
+[TEST_BODY_END]
+
+[TEST_CASE lower_a]
+char            BYTE 'a'
+actual_value    BYTE
+expected_value  BYTE 'a'
+[TEST_CASE_END]
+
+[TEST_CASE upper_A]
+char            BYTE 'A'
+actual_value    BYTE
+expected_value  BYTE 'a'
+[TEST_CASE_END]
+
+[TEST_CASE lower_z]
+char            BYTE 'z'
+actual_value    BYTE
+expected_value  BYTE 'z'
+[TEST_CASE_END]
+
+[TEST_CASE upper_Z]
+char            BYTE 'Z'
+actual_value    BYTE
+expected_value  BYTE 'z'
+[TEST_CASE_END]
+
+[TEST_CASE num_0]
+char            BYTE '0'
+actual_value    BYTE
+expected_value  BYTE '0'
+[TEST_CASE_END]
+
+[TEST_CASE underscore]
+char            BYTE '_'
+actual_value    BYTE
+expected_value  BYTE '_'
+[TEST_CASE_END]
+[TEST_SUITE_END]

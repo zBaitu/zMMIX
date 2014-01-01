@@ -1,0 +1,15 @@
+[TEST_SUITE test_EXPECT_BYTE_EQ]
+[TEST_BODY]
+    [EXPECT_BYTE_EQ left,right]
+[TEST_BODY_END]
+
+[TEST_CASE eq]
+left    BYTE 123
+right   BYTE 123
+[TEST_CASE_END]
+
+[TEST_CASE ne]
+left    BYTE #80
+right   BYTE #81
+[TEST_CASE_END]
+[TEST_SUITE_END]

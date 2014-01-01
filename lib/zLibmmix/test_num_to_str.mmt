@@ -1,0 +1,65 @@
+[TEST_SUITE test_NUM_TO_STR]
+[TEST_BODY]
+    LDO     $1,num
+    LDA     $2,str
+    SET     $3,len
+    PUSHJ   $0,:NumToStr
+    STO     $0,str_begin    
+    [EXPECT_STR_EQ  str,expected_str]
+    [EXPECT_OCTA_EQ str_begin,expected_str_begin]
+[TEST_BODY_END]
+
+[TEST_CASE positive_short_eq]
+num                 OCTA    9
+str                 BYTE    " ",0
+len                 IS      1
+expected_str        BYTE    '9',0
+str_begin           OCTA
+expected_str_begin  OCTA str
+[TEST_CASE_END]
+
+[TEST_CASE positive_eq]
+num                 OCTA    12321
+str                 BYTE    "          ",0
+len                 IS      10
+expected_str        BYTE    "     12321",0
+str_begin           OCTA
+expected_str_begin  OCTA str+5
+[TEST_CASE_END]
+
+[TEST_CASE positive_long_eq]
+num                 OCTA    12345678987654321
+str                 BYTE    "                    ",0
+len                 IS      20
+expected_str        BYTE    "   12345678987654321",0
+str_begin           OCTA
+expected_str_begin  OCTA str+3
+[TEST_CASE_END]
+
+[TEST_CASE negative_short_eq]
+num                 OCTA    -1
+str                 BYTE    "  ",0
+len                 IS      2
+expected_str        BYTE    "-1",0
+str_begin           OCTA
+expected_str_begin  OCTA str
+[TEST_CASE_END]
+
+[TEST_CASE negative_eq]
+num                 OCTA    -54321
+str                 BYTE    "    -54321",0
+len                 IS      10
+expected_str        BYTE    "    -54321",0
+str_begin           OCTA
+expected_str_begin  OCTA str+4
+[TEST_CASE_END]
+
+[TEST_CASE negative_long_eq]
+num                 OCTA    -987654321123456789
+str                 BYTE    "-987654321123456789",0
+len                 IS      19
+expected_str        BYTE    "-987654321123456789",0
+str_begin           OCTA
+expected_str_begin  OCTA str
+[TEST_CASE_END]
+[TEST_SUITE_END]

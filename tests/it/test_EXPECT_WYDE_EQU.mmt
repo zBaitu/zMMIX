@@ -1,0 +1,15 @@
+[TEST_SUITE test_EXPECT_WYDE_EQU]
+[TEST_BODY]
+    [EXPECT_WYDE_EQU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE eq]
+left    WYDE 12345
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE ne]
+left    WYDE #ffff
+right   WYDE #fffe
+[TEST_CASE_END]
+[TEST_SUITE_END]

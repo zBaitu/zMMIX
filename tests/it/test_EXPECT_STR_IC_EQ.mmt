@@ -1,0 +1,35 @@
+[TEST_SUITE test_EXPECT_STR_IC_EQ]
+[TEST_BODY]
+    [EXPECT_STR_IC_EQ left,right]
+[TEST_BODY_END]
+
+[TEST_CASE eq]
+left    BYTE "abcdefg",0
+right   BYTE "abcdefg",0
+[TEST_CASE_END]
+
+[TEST_CASE upper2lower_ignore_case_eq]
+left    BYTE "ABCDEFG",0
+right   BYTE "abcdefg",0
+[TEST_CASE_END]
+
+[TEST_CASE lower2upper_ignore_case_eq]
+left    BYTE "abcdefg",0
+right   BYTE "ABCDEFG",0
+[TEST_CASE_END]
+
+[TEST_CASE ne]
+left    BYTE "abcdefg",0
+right   BYTE "abcdef",0
+[TEST_CASE_END]
+
+[TEST_CASE zero_len_eq]
+left    BYTE 0
+right   BYTE 0
+[TEST_CASE_END]
+
+[TEST_CASE zero_len_ne]
+left    BYTE 'a',0
+right   BYTE 0
+[TEST_CASE_END]
+[TEST_SUITE_END]

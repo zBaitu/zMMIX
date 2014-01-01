@@ -1,0 +1,15 @@
+[TEST_SUITE test_EXPECT_OCTA_EQU]
+[TEST_BODY]
+    [EXPECT_OCTA_EQU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE eq]
+left    OCTA 12345678987654321
+right   OCTA 12345678987654321
+[TEST_CASE_END]
+
+[TEST_CASE ne]
+left    OCTA #ffffffffffffffff
+right   OCTA #fffffffffffffffe
+[TEST_CASE_END]
+[TEST_SUITE_END]
