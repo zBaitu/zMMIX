@@ -7,3 +7,7 @@ set_source_files_properties(${FLEX_zmmix_tg_OUTPUTS} PROPERTIES COMPILE_FLAGS
     "-Wno-unused-function -Wno-unused-label"
 )
 target_link_libraries(zmmix_tg fl)
+
+install(TARGETS zmmix_tg
+    RUNTIME DESTINATION bin
+)

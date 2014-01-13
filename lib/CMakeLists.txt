@@ -1,0 +1,3 @@
+install(DIRECTORY zLibMMIX
+    DESTINATION lib
+)
