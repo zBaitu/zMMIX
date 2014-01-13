@@ -3,7 +3,6 @@ num IS $0
 str IS $1
 len IS $2
 
-neg_char    GREG '-'
 pos         GREG
 remainder   GREG
 

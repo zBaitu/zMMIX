@@ -146,7 +146,7 @@ static const char*  PRINT_RESULT_FORMAT =\
 "    TRAP    0,:Fputs,:StdOut\n"
 "    SET     %s,0\n";
 
-static const char* ZLIB_MMIX = "zLibmmix";
+static const char* ZLIB_MMIX = "zLibMMIX";
 
 #define LIST_FORWARD(node)              node = &(*node)->next
 #define LIST_FOREACH(node)\
@@ -744,7 +744,7 @@ static void include_builtin_lib(FILE* test_mms_file, const char* zlibmmix_path)
     char builtin_mms_path[PATH_MAX];
     snprintf(builtin_mms_path, PATH_MAX, "%s/%s", zlibmmix_path, BUILTIN_MMS);
     FILE* builtin_mms_file = fopen(builtin_mms_path, "r");
-    if (!builtin_mms_path)
+    if (!builtin_mms_file)
         process_error("fopen(%s, \"r\") error:%m", builtin_mms_path);
 
     char builtin_mms[PATH_MAX];
