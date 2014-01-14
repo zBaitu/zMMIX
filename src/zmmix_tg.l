@@ -23,7 +23,7 @@ typedef enum test_label_t
 
 typedef struct linked_node_t
 {
-    void*                   data;
+    const void*             data;
     struct linked_node_t    *next;
 }linked_node_t;
 
@@ -94,22 +94,23 @@ typedef struct code_buffer_t
     size_t  size;
 }code_buffer_t;
 
-static linked_node_t    *_test_target_head_,    **_cur_test_target_ = &_test_target_head_;
-static linked_node_t    *_test_suite_head_,     **_cur_test_suite_  = &_test_suite_head_;
-static linked_node_t    *_assertion_head_,      **_cur_assertion_   = &_assertion_head_;
+static linked_node_t *_test_target_head_,   **_cur_test_target_ = &_test_target_head_;
+static linked_node_t *_test_suite_head_,    **_cur_test_suite_  = &_test_suite_head_;
+static linked_node_t *_assertion_head_,     **_cur_assertion_   = &_assertion_head_;
 
-static const int    ESC_LEN = 1; 
+static const int    ESC_LEN = 1;
 static test_label_t _context_label_;
 static char         _test_dir_[PATH_MAX];
 static const char*  TEST_MMT_FILE_NAME;
 static const char*  BUILTIN_MMS = "builtin_mms";
+static const char*  ZLIB_MMIX   = "zLibMMIX";
 
-static const char* DATA_SEGMENT_HEAD =\
+static const char* DATA_SEGMENT_HEAD = \
 "               LOC Data_Segment\n"
 "               GREG @\n"
-"case_result    GREG\n"
-"suite_result   GREG\n"
 "test_result    GREG\n"
+"suite_result   GREG\n"
+"case_result    GREG\n"
 "tmp_reg        GREG\n"
 "NEW_LINE       BYTE #a,0\n"
 "TEST_ALL_STR   BYTE \"  TEST_ALL\",0\n"
@@ -118,43 +119,37 @@ static const char* DATA_SEGMENT_HEAD =\
 "BLANK_STR      BYTE \"        \",0\n"
 "PASSED_STR     BYTE \"[PASSED]\",0\n"
 "FAILED_STR     BYTE \"[FAILED]\",0\n\n";
-static const char* TEXT_SEGMENT_HEAD    = "\n    LOC #100\n";
-static const char* MAIN_HEAD            = "Main   JMP @+4\n";
+static const char* TEXT_SEGMENT_HEAD    = "\n   LOC #100\n";
+static const char* MAIN_HEAD            = "Main JMP @+4\n";
 
-static const char*  GREG_BASE_ADDR                  = "    GREG @\n";
-static const char*  TEST_SUITE_PREFIX_FORMAT        = "    PREFIX :%s:\n";
-static const char*  TEST_CASE_PREFIX_FORMAT         = "    PREFIX :%s:%s:\n";
-static const char*  PREFIX_END                      = "    PREFIX :\n";
-static const char*  TEST_SUITE_NAME_FORMAT          = "suite_name    BYTE \" %s \",0\n";
+static const char*  GREG_BASE_ADDR                  = " GREG @\n";
+static const char*  TEST_SUITE_PREFIX_FORMAT        = " PREFIX :%s:\n";
+static const char*  TEST_CASE_PREFIX_FORMAT         = " PREFIX :%s:%s:\n";
+static const char*  PREFIX_END                      = " PREFIX :\n";
+static const char*  TEST_SUITE_NAME_FORMAT          = "suite_name   BYTE \" %s \",0\n";
 static const char*  TEST_CASE_NAME_FORMAT           = "case_name    BYTE \" %s \",0\n";
-static const char*  ASSERTION_LDA_FORMAT            = "    LDA     $%d,%s\n";
-static const char*  ASSERTION_PUSHJ_FORMAT          = "    PUSHJ   $0,:%s\n";
-static const int    ASSERTION_LDO_FORMAT_LEN_DIFF   = 3;
+static const char*  ASSERTION_LDA_FORMAT            = " LDA     $%d,%s\n";
+static const char*  ASSERTION_PUSHJ_FORMAT          = " PUSHJ   $0,:%s\n";
+static const int    ASSERTION_LDA_FORMAT_LEN_DIFF   = 3;
 static const int    ASSERTION_PUSHJ_FORMAT_LEN_DIFF = 2;
-static const char*  AFTER_ASSERTION_CALL_FORMAT =\
-"    CSNZ    :case_result,$0,1\n"
-"    CSNZ    :suite_result,$0,1\n"
-"    CSNZ    :test_result,$0,1\n";
-static const char*  PRINT_STR_FORMAT =\
-"    LDA     $255,%s\n"
-"    TRAP    0,:Fputs,:StdOut\n";
-static const char*  PRINT_RESULT_FORMAT =\
-"    LDA     $255,:FAILED_STR\n"
-"    LDA     :tmp_reg,:PASSED_STR\n"
-"    CMP     $0,%s,0\n"
-"    CSZ     $255,$0,:tmp_reg\n"
-"    TRAP    0,:Fputs,:StdOut\n"
-"    SET     %s,0\n";
-
-static const char* ZLIB_MMIX = "zLibMMIX";
+static const char*  AFTER_ASSERTION_CALL_FORMAT = \
+"   CSNZ    :case_result,$0,1\n"
+"   CSNZ    :suite_result,$0,1\n"
+"   CSNZ    :test_result,$0,1\n";
+static const char*  PRINT_STR_FORMAT = \
+"   LDA     $255,%s\n"
+"   TRAP    0,:Fputs,:StdOut\n";
+static const char*  PRINT_RESULT_FORMAT = \
+"   LDA     $255,:FAILED_STR\n"
+"   LDA     :tmp_reg,:PASSED_STR\n"
+"   CMP     $0,%s,0\n"
+"   CSZ     $255,$0,:tmp_reg\n"
+"   TRAP    0,:Fputs,:StdOut\n"
+"   SET     %s,0\n";
 
 #define LIST_FORWARD(node)              node = &(*node)->next
-#define LIST_FOREACH(node)\
-    while (node)\
-    {
-#define LIST_FOREACH_END(node)\
-        node = node->next;\
-    }
+#define LIST_FOREACH(node)              while (node) {
+#define LIST_FOREACH_END(node)          node = node->next; }
 #define ADD_CONTEXT_LABEL(test_label)   _context_label_ |= test_label
 #define RM_CONTEXT_LABEL(test_label)    _context_label_ &= ~test_label
 #define GET_TEST_NAME(data)             (*(char**)data)
@@ -188,8 +183,6 @@ static const char* ZLIB_MMIX = "zLibMMIX";
     fprintf(test_mms_file, "\n");
 #define GEN_TEST_CASE_BEGIN(test_suite_name, test_case_name)\
     fprintf(test_mms_file, TEST_CASE_PREFIX_FORMAT, test_suite_name, test_case_name);
-//    fprintf(test_mms_file, PRINT_STR_FORMAT, ":TEST_CASE_STR");
-//    fprintf(test_mms_file, PRINT_STR_FORMAT, "case_name");
 #define GEN_TEST_CASE_END()\
     fprintf(test_mms_file, AFTER_ASSERTION_CALL_FORMAT);\
     fprintf(test_mms_file, PRINT_RESULT_FORMAT, ":case_result", ":case_result");\
@@ -308,7 +301,7 @@ static void check_context(test_label_t test_label, int line)
     if (_context_label_ != context_label)
     {
         process_error("context error[line %d]: current_context[%u] != expected_context[%u]\n",
-            line,  _context_label_, context_label);
+                line,  _context_label_, context_label);
     }
 }
 
@@ -320,14 +313,14 @@ static void* zmalloc(size_t size)
     return mem;
 }
 
-static void* list_find(const linked_node_t *head, const char* name)
+static const void* list_find(const linked_node_t *node, const char* name)
 {
-    LIST_FOREACH(head)
+    LIST_FOREACH(node)
     {
-        if (strcmp(GET_TEST_NAME(head->data), name) == 0)
-            return head->data;
+        if (strcmp(GET_TEST_NAME(node->data), name) == 0)
+            return node->data;
     }
-    LIST_FOREACH_END(head);
+    LIST_FOREACH_END(node);
     return NULL;
 }
 
@@ -339,9 +332,9 @@ static linked_node_t* create_linked_node(void* data)
     return node;
 }
 
-static void list_add(linked_node_t ***cur_node, void* data)
+static void list_add(linked_node_t ***cur_node, const void* data)
 {
-    linked_node_t *new_node = create_linked_node(data);
+    linked_node_t *new_node = create_linked_node((void*)data);
     **cur_node = new_node;
     *cur_node = &new_node->next;
 }
@@ -367,7 +360,7 @@ static void* get_test_label_name(test_label_t test_label)
 
 static void check_duplicated(test_label_t test_label, const linked_node_t *head, const char* name)
 {
-    void* test = list_find(head, name);
+    const void* test = list_find(head, name);
     if (test)
     {
         const char* test_label_name = get_test_label_name(test_label);
@@ -379,11 +372,11 @@ static void check_duplicated(test_label_t test_label, const linked_node_t *head,
 
 static void check_test_body_duplicated(const test_suite_t *test_suite)
 {
-    test_body_t *test_body = test_suite->test_body;
+    const test_body_t *test_body = test_suite->test_body;
     if (test_body)
     {
         process_error("[TEST_BODY:%d of TEST_SUITE:%s:%d] already exists",
-            test_body->line, test_suite->name, test_suite->line);
+                test_body->line, test_suite->name, test_suite->line);
     }
 }
 
@@ -410,7 +403,7 @@ static char* get_param_list(const char* text)
     return param_list;
 }
 
-static test_target_t* create_test_target(const char* name, int line)
+static const test_target_t* create_test_target(const char* name, int line)
 {
     test_target_t *test_target = (test_target_t*)zmalloc(sizeof(test_target_t));
     test_target->name = name;
@@ -420,7 +413,7 @@ static test_target_t* create_test_target(const char* name, int line)
 
 static void add_test_target(const char* name, int line)
 {
-    test_target_t *test_target = create_test_target(name, line);
+    const test_target_t *test_target = create_test_target(name, line);
     list_add(&_cur_test_target_, test_target);
 }
 
@@ -465,7 +458,7 @@ static void test_suite_end(void)
     RM_CONTEXT_LABEL(TEST_SUITE_BEGIN);
 }
 
-test_case_t* create_test_case(const char* name, int line, const char* test_case_begin)
+static test_case_t* create_test_case(const char* name, int line, const char* test_case_begin)
 {
     test_case_t *test_case = (test_case_t*)zmalloc(sizeof(test_case_t));
     test_case->name = name;
@@ -531,7 +524,7 @@ static bool has_code(const char* begin, const char* end)
     return false;
 }
 
-static code_t* create_code_code_block(const char* begin, const char* end)
+static const code_t* create_code_code_block(const char* begin, const char* end)
 {
     while (*end != '\n' && isspace(*end))
         end--;
@@ -545,7 +538,7 @@ static code_t* create_code_code_block(const char* begin, const char* end)
 
 static void add_code_code_block(test_body_t *test_body, const char* end)
 {
-    code_t *code = create_code_code_block(test_body->prev_text, end);
+    const code_t *code = create_code_code_block(test_body->prev_text, end);
     list_add(&test_body->cur_code, code);
 }
 
@@ -563,17 +556,17 @@ static void test_body_end(const char* text)
     RM_CONTEXT_LABEL(TEST_BODY_BEGIN);
 }
 
-static assertion_t* create_assertion(const char* name)
+static const assertion_t* create_assertion(const char* name)
 {
     assertion_t *assertion = (assertion_t*)zmalloc(sizeof(assertion_t));
     assertion->name = name;
     return assertion;
 }
 
-static assertion_t* get_or_create_assertion(const char* assertion_begin)
+static const assertion_t* get_or_create_assertion(const char* assertion_begin)
 {
     const char* name = get_key(assertion_begin);
-    assertion_t *assertion = list_find(_assertion_head_, name);
+    const assertion_t *assertion = list_find(_assertion_head_, name);
     if (!assertion)
     {
         assertion = create_assertion(name);
@@ -586,7 +579,7 @@ static assertion_t* get_or_create_assertion(const char* assertion_begin)
     return assertion;
 }
 
-static code_t* create_code_assertion_call(const assertion_t *assertion, const char* assertion_begin)
+static const code_t* create_code_assertion_call(const assertion_t *assertion, const char* assertion_begin)
 {
     char* param_list = get_param_list(assertion_begin);
     code_t *code = (code_t*)zmalloc(sizeof(code_t));
@@ -598,13 +591,13 @@ static code_t* create_code_assertion_call(const assertion_t *assertion, const ch
 
 static void add_code_assertion_call(const assertion_t *assertion, const char* assertion_begin)
 {
-    code_t *code = create_code_assertion_call(assertion, assertion_begin);
+    const code_t *code = create_code_assertion_call(assertion, assertion_begin);
     list_add(&GET_CUR_TEST_BODY()->cur_code, code);
 }
 
 static void add_assertion_call_for_test_body(const char* assertion_begin)
 {
-    assertion_t *assertion = get_or_create_assertion(assertion_begin);
+    const assertion_t *assertion = get_or_create_assertion(assertion_begin);
     add_code_assertion_call(assertion, assertion_begin);
 }
 
@@ -617,64 +610,66 @@ static void assertion(const char* text, int line)
     GET_CUR_TEST_BODY()->prev_text = text + strlen(text);
 }
 
+#ifdef DEBUG
 static void debug(const char* test_mmt_file_name)
 {
     printf("%s\n", test_mmt_file_name);
 
-    printf("\n-----------test_target\n");
-    linked_node_t *node = _test_target_head_;
-    while (node)
+    printf("----------test_target begin----------\n");
+    linked_node_t *test_target_node = _test_target_head_;
+    LIST_FOREACH(test_target_node)
     {
-        test_target_t *test_target = (test_target_t*)node->data;
+        test_target_t *test_target = GET_TEST_TARGET(test_target_node);
         printf("%s:%d\n", test_target->name, test_target->line);
-        node = node->next;
     }
+    LIST_FOREACH_END(test_target_node);
+    printf("----------test_target end----------\n\n");
 
-    printf("\n-----------test_suite_begin\n");
-    node = _test_suite_head_;
-    while (node)
+    printf("----------test_suite begin----------\n");
+    linked_node_t *test_suite_node = _test_suite_head_;
+    LIST_FOREACH(test_suite_node)
     {
-        test_suite_t *test_suite = (test_suite_t*)node->data;
+        test_suite_t *test_suite = GET_TEST_SUITE(test_suite_node);
         printf("%s:%d\n", test_suite->name, test_suite->line);
 
         test_body_t *test_body = test_suite->test_body;
-        printf(" -----------test_body_begin\n");
+        printf("----------test_body begin----------\n");
         printf("%d\n", test_body->line);
         linked_node_t *code_node = test_body->code_head;
-        while (code_node)
+        LIST_FOREACH(code_node)
         {
-            code_t *code = (code_t*)(code_node->data);
+            code_t *code = GET_CODE(code_node);
             if (code->code_type == CODE_BLOCK)
             {
-                printf("----code_block_begin\n");
+                printf("-----code_block begin-----\n");
                 fwrite(code->code_block.begin, 1, code->code_block.end - code->code_block.begin + 1, stdout);
-                printf("----code_block_end\n");
+                printf("-----code_block end-----\n");
             }
             else
             {
-                printf("----assertion_begin\n");
+                printf("-----assertion begin-----\n");
                 printf("%s %s\n", code->assertion_call.name, code->assertion_call.param_list);
-                printf("----assertion_end\n");
+                printf("-----assertion end-----\n");
             }
-            code_node = code_node->next;
         }
-        printf(" -----------test_body_end\n");
+        LIST_FOREACH_END(code_node);
+        printf("----------test_body end----------\n\n");
 
-        printf(" -----------test_case_begin\n");
-        linked_node_t *case_node = test_suite->test_case_head;
-        while (case_node)
+        printf("----------test_case begin----------\n");
+        linked_node_t *test_case_node = test_suite->test_case_head;
+        LIST_FOREACH(test_case_node)
         {
-            test_case_t *test_case = (test_case_t*)case_node->data;
+            test_case_t *test_case = GET_TEST_CASE(test_case_node);
             printf("%s:%d\n", test_case->name, test_case->line);
             fwrite(test_case->code.begin, 1, test_case->code.end - test_case->code.begin + 1, stdout);
-            case_node = case_node->next;
         }
-        printf(" -----------test_case_end\n");
-
-        node = node->next;
+        LIST_FOREACH_END(test_case_node);
+        printf("----------test_case end----------\n");
     }
-    printf("-----------test_suite_end\n");
+    LIST_FOREACH_END(test_suite_node);
+    printf("----------test_suite end----------\n");
 }
+#endif
 
 static void get_test_mms_file_name(const char* mmt, char mms[PATH_MAX])
 {
@@ -802,7 +797,7 @@ static int get_param_count(const char* param_list)
 
 static size_t get_test_body_buffer_size(const test_body_t *test_body)
 {
-    size_t ldo_len = strlen(ASSERTION_LDA_FORMAT) - ASSERTION_LDO_FORMAT_LEN_DIFF;
+    size_t lda_len = strlen(ASSERTION_LDA_FORMAT) - ASSERTION_LDA_FORMAT_LEN_DIFF;
     size_t assertion_call_len = strlen(ASSERTION_PUSHJ_FORMAT) - ASSERTION_PUSHJ_FORMAT_LEN_DIFF;
 
     size_t size = 0;
@@ -819,8 +814,8 @@ static size_t get_test_body_buffer_size(const test_body_t *test_body)
         {
             const assertion_call_t* assertion_call = GET_ASSERTION_CALL(code);
             int param_count = get_param_count(assertion_call->param_list);
-            size += param_count * ldo_len + strlen(assertion_call->param_list) - param_count + 1
-                + assertion_call_len + strlen(assertion_call->name);
+            size += param_count * lda_len + strlen(assertion_call->param_list) - param_count + 1
+                    + assertion_call_len + strlen(assertion_call->name);
         }
     }
     LIST_FOREACH_END(code_node);
@@ -831,7 +826,7 @@ static size_t get_test_body_buffer_size(const test_body_t *test_body)
 static void get_test_body_buffer(const test_body_t *test_body, code_buffer_t *test_body_buffer)
 {
     size_t size = get_test_body_buffer_size(test_body);
-    char* buf = (char*)zmalloc(size);
+    char* buf = (char*)zmalloc(size + 1);   /* Because of using sprintf(), it must be one byte more for '\0' */
     char* cur = buf;
 
     const linked_node_t *code_node = test_body->code_head;
@@ -913,7 +908,10 @@ static void generate_text_segment(FILE* test_mms_file, const linked_node_t *test
 
 static void generate_test_mms_file(const char* test_mmt_file_name)
 {
-//    debug(test_mmt_file_name);
+#ifdef DEBUG
+    debug(test_mmt_file_name);
+#endif
+
     char test_mms_file_name[PATH_MAX];
     get_test_mms_file_name(test_mmt_file_name, test_mms_file_name);
 
@@ -960,6 +958,92 @@ static void usage(void)
     process_error("Usage: %s TEST_FILE\n", tester_bin_name);
 }
 
+static void free_test_target(const linked_node_t* test_target_node)
+{
+    while (test_target_node)
+    {
+        const test_target_t *test_target = GET_TEST_TARGET(test_target_node);
+        free((void*)test_target->name);
+        free((void*)test_target);
+
+        const linked_node_t* cur_test_target_node = test_target_node;
+        test_target_node = test_target_node->next;
+        free((void*)cur_test_target_node);
+    }
+}
+
+static void free_test_body(test_body_t *test_body)
+{
+    const linked_node_t* code_node = test_body->code_head; 
+    while (code_node)
+    {
+        const code_t *code = GET_CODE(code_node);
+        if (code->code_type == ASSERTION_CALL)
+        {
+            const assertion_call_t *assertion_call = GET_ASSERTION_CALL(code);
+            free((void*)assertion_call->name);
+            free(assertion_call->param_list);
+        }
+        free((void*)code);
+
+        const linked_node_t* cur_code_node = code_node;
+        code_node = code_node->next;
+        free((void*)cur_code_node);
+    }
+}
+
+static void free_test_case(const linked_node_t* test_case_node)
+{
+    while (test_case_node)
+    {
+        const test_case_t *test_case = GET_TEST_CASE(test_case_node);
+        free((void*)test_case->name);
+        free((void*)test_case);
+
+        const linked_node_t* cur_test_case_node = test_case_node;
+        test_case_node = test_case_node->next;
+        free((void*)cur_test_case_node);
+    }
+}
+
+static void free_test_suite(const linked_node_t* test_suite_node)
+{
+    while (test_suite_node)
+    {
+        const test_suite_t *test_suite = GET_TEST_SUITE(test_suite_node);
+        free_test_body(test_suite->test_body);
+        free_test_case(test_suite->test_case_head);
+        free((void*)test_suite->name);
+        free(test_suite->test_body);
+        free((void*)test_suite);
+
+        const linked_node_t* cur_test_suite_node = test_suite_node;
+        test_suite_node = test_suite_node->next;
+        free((void*)cur_test_suite_node);
+    }
+}
+
+static void free_asssertion(const linked_node_t* assertion_node)
+{
+    while (assertion_node)
+    {
+        const assertion_t *assertion = GET_ASSERTION(assertion_node);
+        free((void*)assertion->name);
+        free((void*)assertion);
+
+        const linked_node_t* cur_assertion_node = assertion_node;
+        assertion_node = assertion_node->next;
+        free((void*)cur_assertion_node);
+    }
+}
+
+static void free_res()
+{
+    free_test_target(_test_target_head_);
+    free_test_suite(_test_suite_head_);
+    free_asssertion(_assertion_head_);
+}
+
 static void compile(const char* test_file_name)
 {
     TEST_MMT_FILE_NAME = test_file_name;
@@ -979,6 +1063,7 @@ static void compile(const char* test_file_name)
     yy_delete_buffer(file_buffer);
 
     fclose(test_file);
+    free_res();
 }
 
 int main(int argc, char* argv[])

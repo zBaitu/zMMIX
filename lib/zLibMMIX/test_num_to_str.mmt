@@ -4,7 +4,7 @@
     LDA     $2,str
     SET     $3,len
     PUSHJ   $0,:NumToStr
-    STO     $0,str_begin    
+    STO     $0,str_begin
     [EXPECT_STR_EQ  str,expected_str]
     [EXPECT_OCTA_EQ str_begin,expected_str_begin]
 [TEST_BODY_END]
