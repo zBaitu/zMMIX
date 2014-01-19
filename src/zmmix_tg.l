@@ -102,8 +102,9 @@ static const int    ESC_LEN = 1;
 static test_label_t _context_label_;
 static char         _test_dir_[PATH_MAX];
 static const char*  TEST_MMT_FILE_NAME;
-static const char*  BUILTIN_MMS = "builtin_mms";
-static const char*  ZLIB_MMIX   = "zLibMMIX";
+static const char*  BUILTIN_MMS     = "builtin_mms";
+static const char*  ZLIB_MMIX       = "zLibMMIX";
+static const char*  ASSERTION_DIR   = "testing/assertion";
 
 static const char* DATA_SEGMENT_HEAD = \
 "               LOC Data_Segment\n"
@@ -775,10 +776,12 @@ static void get_zlibmmix_path(char zlibmmix_path[PATH_MAX])
 
 static void generate_assertion(FILE* test_mms_file, const linked_node_t *assertion_node, const char* zlibmmix_path)
 {
+    char assertion_dir[PATH_MAX];
+    snprintf(assertion_dir, PATH_MAX, "%s/%s", zlibmmix_path, ASSERTION_DIR);
     LIST_FOREACH(assertion_node)
     {
         assertion_t *assertion = GET_ASSERTION(assertion_node);
-        include_mms(test_mms_file, zlibmmix_path, assertion->name);
+        include_mms(test_mms_file, assertion_dir, assertion->name);
     }
     LIST_FOREACH_END(assertion_node);
 }

@@ -1,6 +1,6 @@
-char
-num_to_str
-unsigned_num_to_str
-print_assertion_fail
-print_unsigned_assertion_fail
-print_str_assertion_fail
+char/char
+numeric/num_to_str
+numeric/unsigned_num_to_str
+testing/printer/print_assertion_fail
+testing/printer/print_unsigned_assertion_fail
+testing/printer/print_str_assertion_fail
