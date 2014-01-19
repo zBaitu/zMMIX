@@ -1,4 +1,4 @@
-char/char
+char/tolower
 numeric/num_to_str
 numeric/unsigned_num_to_str
 testing/printer/print_assertion_fail

@@ -22,12 +22,12 @@ expected_value_str  BYTE "                    ",#a,0
                         SET     num,actual_value
                         LDA     str,actual_value_str
                         SET     str_len,max_str_len
-                        PUSHJ   param,:num_to_str
+                        PUSHJ   param,:numeric:num_to_str
                         SET     actual_str_begin,param
                         SET     num,expected_value
                         LDA     str,expected_value_str
                         SET     str_len,max_str_len
-                        PUSHJ   param,:num_to_str
+                        PUSHJ   param,:numeric:num_to_str
                         SET     expected_str_begin,param
 
                         LDA     $255,NEW_LINE

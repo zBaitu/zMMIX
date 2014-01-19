@@ -1,6 +1,4 @@
-    PREFIX :char:
-
-    PREFIX tolower:
+    PREFIX :char:tolower:
 char                IS $0
 cmp_result          GREG
 UPPER_LOWER_DIFF    IS #20
@@ -11,6 +9,4 @@ UPPER_LOWER_DIFF    IS #20
                 BP  cmp_result,return
                 ADD char,char,UPPER_LOWER_DIFF
 return          POP 1,0
-    PREFIX :char:
-
     PREFIX :

@@ -22,7 +22,7 @@ pos_str         BYTE "                    ",#a,0
     SET     num,pos
     LDA     str,pos_str
     SET     str_len,20
-    PUSHJ   param,:num_to_str
+    PUSHJ   param,:numeric:num_to_str
     SET     pos_str_begin,param
     PUT     :rJ,rj_bak
 
