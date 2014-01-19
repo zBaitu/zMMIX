@@ -3,7 +3,7 @@
     LDO     $1,num
     LDA     $2,str
     SET     $3,len
-    PUSHJ   $0,:UnsignedNumToStr
+    PUSHJ   $0,:unsigned_num_to_str
     STO     $0,str_begin    
     [EXPECT_STR_EQ str,expected_str]
     [EXPECT_OCTA_EQ str_begin,expected_str_begin]

@@ -1,4 +1,4 @@
-    PREFIX :PrintStrAssetionFail
+    PREFIX :print_str_assertion_fail
 assertion_str   IS $0
 actual_str      IS $1
 expected_str    IS $2
@@ -18,11 +18,11 @@ NEW_LINE        BYTE #a,0
 pos_str         BYTE "                    ",#a,0
 
 
-:PrintStrAssetionFail GET rj_bak,:rJ
+:print_str_assertion_fail GET rj_bak,:rJ
     SET     num,pos
     LDA     str,pos_str
     SET     str_len,20
-    PUSHJ   param,:NumToStr
+    PUSHJ   param,:num_to_str
     SET     pos_str_begin,param
     PUT     :rJ,rj_bak
 

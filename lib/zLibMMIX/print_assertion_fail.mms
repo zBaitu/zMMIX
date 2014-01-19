@@ -1,4 +1,4 @@
-    PREFIX :PrintAssetionFail
+    PREFIX :print_assertion_fail
 assertion_str   IS $0
 actual_value    IS $1
 expected_value  IS $2
@@ -18,31 +18,31 @@ NEW_LINE            BYTE #a,0
 actual_value_str    BYTE "                    ",#a,0
 expected_value_str  BYTE "                    ",#a,0
 
-:PrintAssetionFail  GET     rj_bak,:rJ
-                    SET     num,actual_value
-                    LDA     str,actual_value_str
-                    SET     str_len,max_str_len
-                    PUSHJ   param,:NumToStr
-                    SET     actual_str_begin,param
-                    SET     num,expected_value
-                    LDA     str,expected_value_str
-                    SET     str_len,max_str_len
-                    PUSHJ   param,:NumToStr
-                    SET     expected_str_begin,param
+:print_assertion_fail   GET     rj_bak,:rJ
+                        SET     num,actual_value
+                        LDA     str,actual_value_str
+                        SET     str_len,max_str_len
+                        PUSHJ   param,:num_to_str
+                        SET     actual_str_begin,param
+                        SET     num,expected_value
+                        LDA     str,expected_value_str
+                        SET     str_len,max_str_len
+                        PUSHJ   param,:num_to_str
+                        SET     expected_str_begin,param
 
-                    LDA     $255,NEW_LINE
-                    TRAP    0,:Fputs,:StdOut
-                    LDA     $255,assertion_str
-                    TRAP    0,:Fputs,:StdOut
-                    LDA     $255,ACTURAL_STR
-                    TRAP    0,:Fputs,:StdOut
-                    LDA     $255,actual_str_begin
-                    TRAP    0,:Fputs,:StdOut
-                    LDA     $255,EXPECTED_STR
-                    TRAP    0,:Fputs,:StdOut
-                    LDA     $255,expected_str_begin
-                    TRAP    0,:Fputs,:StdOut
+                        LDA     $255,NEW_LINE
+                        TRAP    0,:Fputs,:StdOut
+                        LDA     $255,assertion_str
+                        TRAP    0,:Fputs,:StdOut
+                        LDA     $255,ACTURAL_STR
+                        TRAP    0,:Fputs,:StdOut
+                        LDA     $255,actual_str_begin
+                        TRAP    0,:Fputs,:StdOut
+                        LDA     $255,EXPECTED_STR
+                        TRAP    0,:Fputs,:StdOut
+                        LDA     $255,expected_str_begin
+                        TRAP    0,:Fputs,:StdOut
 
-                    PUT     :rJ,rj_bak
-                    POP     0,0
+                        PUT     :rJ,rj_bak
+                        POP     0,0
     PREFIX :

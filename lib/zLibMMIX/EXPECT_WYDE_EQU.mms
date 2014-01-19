@@ -22,7 +22,7 @@ failed              GET     rj_bak,:rJ
                     SET     $2,value
                     SET     $3,expected_value
                     SET     $4,MAX_NUM_STR_LEN
-                    PUSHJ   $0,:PrintUnsignedAssetionFail
+                    PUSHJ   $0,:print_unsigned_assertion_fail
                     PUT     :rJ,rj_bak
                     SET     $0,result
                     POP     1,0

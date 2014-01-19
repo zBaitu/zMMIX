@@ -1,4 +1,4 @@
-    PREFIX :NumToStr
+    PREFIX :num_to_str
 num IS $0
 str IS $1
 len IS $2
@@ -8,7 +8,7 @@ neg_char    GREG '-'
 pos         GREG
 remainder   GREG
 
-:NumToStr   CMP     is_negative,num,0
+:num_to_str CMP     is_negative,num,0
             PBNN    is_negative,begin
             NEGU    num,0,num
 

@@ -27,7 +27,7 @@ failed          GET     rj_bak,:rJ
                 SET     param+2,actual_value_addr
                 SET     param+3,expected_value_addr
                 SET     param+4,pos
-                PUSHJ   param,:PrintStrAssetionFail
+                PUSHJ   param,:print_str_assertion_fail
                 PUT     :rJ,rj_bak
                 SET     $0,result
                 POP     1,0
