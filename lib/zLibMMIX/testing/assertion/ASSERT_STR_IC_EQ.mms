@@ -1,17 +1,17 @@
-    PREFIX :EXPECT_STR_IC_EQ
+    PREFIX :ASSERT_STR_IC_EQ
 actual_value_addr   IS $0
 expected_value_addr IS $1
 param               IS $2
 
                     GREG @
-ASSERTION_STR       BYTE "EXPECT_STR_IC_EQ",#a,0
+ASSERTION_STR       BYTE "ASSERT_STR_IC_EQ",#a,0
 pos                 GREG
 actual_value        GREG
 expected_value      GREG
 result              GREG
 rj_bak              GREG
 
-:EXPECT_STR_IC_EQ   GET     rj_bak,:rJ
+:ASSERT_STR_IC_EQ   GET     rj_bak,:rJ
                     SET     pos,0
 loop                LDBU    actual_value,actual_value_addr,pos
                     SET     param+1,actual_value

@@ -1,6 +1,6 @@
-[TEST_SUITE test_EXPECT_TETRA_EQ]
+[TEST_SUITE test_ASSERT_TETRA_EQ]
 [TEST_BODY]
-    [EXPECT_TETRA_EQU left,right]
+    [ASSERT_TETRA_EQ left,right]
 [TEST_BODY_END]
 
 [TEST_CASE eq]
@@ -9,7 +9,7 @@ right   TETRA 123456789
 [TEST_CASE_END]
 
 [TEST_CASE ne]
-left    TETRA #ffffffff
-right   TETRA #fffffffe
+left    TETRA #80000000
+right   TETRA #80000001
 [TEST_CASE_END]
 [TEST_SUITE_END]

@@ -3,7 +3,7 @@
     LDB     $1,char
     PUSHJ   $0,:char:tolower
     STB     $0,actual_value
-    [EXPECT_BYTE_EQ actual_value,expected_value]
+    [ASSERT_BYTE_EQ actual_value,expected_value]
 [TEST_BODY_END]
 
 [TEST_CASE lower_a]

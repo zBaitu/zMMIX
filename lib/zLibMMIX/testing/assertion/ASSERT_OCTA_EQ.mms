@@ -1,17 +1,17 @@
-    PREFIX :EXPECT_BYTE_EQ
+    PREFIX :ASSERT_OCTA_EQ
 value_addr          IS $0
 expected_value_addr IS $1
-MAX_NUM_STR_LEN     IS 4
+MAX_NUM_STR_LEN     IS 20
 
                     GREG @
-ASSERTION_STR       BYTE "EXPECT_BYTE_EQ",#a,0
+ASSERTION_STR       BYTE "ASSERT_OCTA_EQ",#a,0
 value               GREG
 expected_value      GREG
 result              GREG
 rj_bak              GREG
 
-:EXPECT_BYTE_EQ LDB     value,value_addr
-                LDB     expected_value,expected_value_addr
+:ASSERT_OCTA_EQ LDO     value,value_addr
+                LDO     expected_value,expected_value_addr
                 CMP     result,value,expected_value
                 BNZ     result,failed
                 SET     $0,result

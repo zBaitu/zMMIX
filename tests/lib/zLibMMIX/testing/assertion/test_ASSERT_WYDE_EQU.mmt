@@ -1,6 +1,6 @@
-[TEST_SUITE test_EXPECT_WYDE_EQ]
+[TEST_SUITE test_ASSERT_WYDE_EQU]
 [TEST_BODY]
-    [EXPECT_WYDE_EQ left,right]
+    [ASSERT_WYDE_EQU left,right]
 [TEST_BODY_END]
 
 [TEST_CASE eq]
@@ -9,7 +9,7 @@ right   WYDE 12345
 [TEST_CASE_END]
 
 [TEST_CASE ne]
-left    WYDE #8000
-right   WYDE #8001
+left    WYDE #ffff
+right   WYDE #fffe
 [TEST_CASE_END]
 [TEST_SUITE_END]

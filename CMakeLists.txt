@@ -11,8 +11,9 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE RELEASE)
 endif()
 
-set(CMAKE_C_FLAGS_RELEASE "-std=gnu89 -Wall -Wextra -Werror -Wno-format-security")
-set(CMAKE_C_FLAGS_DEBUG "-std=gnu89 -Wall -Wextra -g -DDEBUG")
+#set(CMAKE_C_FLAGS_RELEASE "-std=gnu99 -Wall -Wextra -Werror -Wno-format-security")
+set(CMAKE_C_FLAGS_RELEASE "-std=gnu99 -Wall -Wextra -Werror")
+set(CMAKE_C_FLAGS_DEBUG "-std=gnu99 -Wall -Wextra -g -DDEBUG")
 
 add_subdirectory(src)
 add_subdirectory(lib)

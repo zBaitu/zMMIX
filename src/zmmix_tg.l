@@ -180,12 +180,12 @@ static const char*  PRINT_RESULT_FORMAT = \
     fprintf(test_mms_file, PRINT_STR_FORMAT, "suite_name");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
-    fprintf(test_mms_file, PREFIX_END);\
+    fprintf(test_mms_file, "%s", PREFIX_END);\
     fprintf(test_mms_file, "\n");
 #define GEN_TEST_CASE_BEGIN(test_suite_name, test_case_name)\
     fprintf(test_mms_file, TEST_CASE_PREFIX_FORMAT, test_suite_name, test_case_name);
 #define GEN_TEST_CASE_END()\
-    fprintf(test_mms_file, AFTER_ASSERTION_CALL_FORMAT);\
+    fprintf(test_mms_file, "%s", AFTER_ASSERTION_CALL_FORMAT);\
     fprintf(test_mms_file, PRINT_RESULT_FORMAT, ":case_result", ":case_result");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":TEST_CASE_STR");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, "case_name");\
@@ -674,17 +674,17 @@ static void debug(const char* test_mmt_file_name)
 
 static void get_test_mms_file_name(const char* mmt, char mms[PATH_MAX])
 {
-    int len = snprintf(mms, PATH_MAX, mmt);
+    int len = snprintf(mms, PATH_MAX, "%s", mmt);
     mms[len - 1] = 's';
 }
 
 static void generate_data_segment(FILE* test_mms_file, const linked_node_t *test_suite_node)
 {
-    fprintf(test_mms_file, DATA_SEGMENT_HEAD);
+    fprintf(test_mms_file, "%s", DATA_SEGMENT_HEAD);
 
     LIST_FOREACH(test_suite_node)
     {
-        fprintf(test_mms_file, GREG_BASE_ADDR);
+        fprintf(test_mms_file, "%s", GREG_BASE_ADDR);
         const test_suite_t *test_suite = GET_TEST_SUITE(test_suite_node);
         const char* test_suite_name = test_suite->name;
         fprintf(test_mms_file, TEST_SUITE_PREFIX_FORMAT, test_suite_name);
@@ -867,7 +867,7 @@ static void get_test_body_buffer(const test_body_t *test_body, code_buffer_t *te
 
 static void generate_test_suite(FILE* test_mms_file, const linked_node_t *test_suite_node)
 {
-    fprintf(test_mms_file, MAIN_HEAD);
+    fprintf(test_mms_file, "%s", MAIN_HEAD);
 
     LIST_FOREACH(test_suite_node)
     {
@@ -902,7 +902,7 @@ static void generate_text_segment(FILE* test_mms_file, const linked_node_t *test
     char zlibmmix_path[PATH_MAX];
     get_zlibmmix_path(zlibmmix_path);
 
-    fprintf(test_mms_file, TEXT_SEGMENT_HEAD);
+    fprintf(test_mms_file, "%s", TEXT_SEGMENT_HEAD);
     include_builtin_lib(test_mms_file, zlibmmix_path);
     generate_test_target(test_mms_file, test_target_node);
     generate_assertion(test_mms_file, assertion_node, zlibmmix_path);
@@ -948,7 +948,7 @@ COMMENT     (\/\*([^*]|\*+[^/*])*\*+\/)|("//".*\n)
 {ESC}TEST_CASE_END{CSE}\n                                       {test_case_end(yytext);}
 {ESC}TEST_BODY{CSE}\n                                           {test_body_begin(yytext, yylineno - 1);}
 {ESC}TEST_BODY_END{CSE}\n                                       {test_body_end(yytext);}
-{ESC}(EXPECT|ASSERT)+_{UPPER_SYM}+{SP}+{SYM}+(,{SYM}+)*{CSE}\n  {assertion(yytext, yylineno - 1);}
+{ESC}ASSERT_{UPPER_SYM}+{SP}+{SYM}+(,{SYM}+)*{CSE}\n            {assertion(yytext, yylineno - 1);}
 {ESC}.*{CSE}                                                    {process_error("label error: %s\n", yytext);}
 <<EOF>>                                                         {generate_test_mms_file(TEST_MMT_FILE_NAME);
                                                                 yyterminate();}
