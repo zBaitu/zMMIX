@@ -1,12 +1,13 @@
     PREFIX :char:tolower:
-char                IS $0
-cmp_result          GREG
-UPPER_LOWER_DIFF    IS #20
+char    IS $0
 
-:char:tolower   CMP cmp_result,char,#41
+cmp_result  GREG
+
+:char:tolower   CMP cmp_result,char,:char:UPPER_A
                 BN  cmp_result,return
-                CMP cmp_result,char,#5a
+                CMP cmp_result,char,:char:UPPER_Z
                 BP  cmp_result,return
-                ADD char,char,UPPER_LOWER_DIFF
+                ADD char,char,:char:UPPER_LOWER_DIFF
+
 return          POP 1,0
     PREFIX :

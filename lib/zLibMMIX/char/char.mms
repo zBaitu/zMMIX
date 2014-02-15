@@ -1,0 +1,9 @@
+    PREFIX :char:
+UPPER_A IS #41
+UPPER_Z IS #5a
+
+LOWER_A IS #61
+LOWER_Z IS #7a
+
+UPPER_LOWER_DIFF    IS #20
+    PREFIX :
