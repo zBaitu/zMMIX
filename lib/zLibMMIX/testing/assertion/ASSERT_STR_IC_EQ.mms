@@ -33,7 +33,7 @@ loop    LDBU    actual_value,actual_value_addr,pos
         PBNZ    result,loop
         PUT     :rJ,rj_bak
         SET     $0,0
-        POP     0,0
+        POP     1,0
 
 failed  LDA     param+1,ASSERTION_STR
         SET     param+2,actual_value_addr

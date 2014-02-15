@@ -976,7 +976,7 @@ static void free_test_target(const linked_node_t* test_target_node)
 
 static void free_test_body(test_body_t *test_body)
 {
-    const linked_node_t* code_node = test_body->code_head; 
+    const linked_node_t* code_node = test_body->code_head;
     while (code_node)
     {
         const code_t *code = GET_CODE(code_node);

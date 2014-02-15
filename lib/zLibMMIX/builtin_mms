@@ -7,3 +7,5 @@ testing/printer/printer
 testing/printer/print_assertion_fail
 testing/printer/print_unsigned_assertion_fail
 testing/printer/print_str_assertion_fail
+testing/printer/print_array_assertion_fail
+testing/printer/print_array_unsigned_assertion_fail

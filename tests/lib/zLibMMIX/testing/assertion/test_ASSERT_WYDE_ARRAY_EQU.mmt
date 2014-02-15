@@ -1,0 +1,47 @@
+[TEST_SUITE test_ASSERT_ARRAY_WYDE_EQU]
+[TEST_BODY]
+    [ASSERT_WYDE_ARRAY_EQU left,right,len]
+[TEST_BODY_END]
+
+[TEST_CASE eq_len_0]
+left    WYDE #7fff
+right   WYDE #7ffe
+len     OCTA 0
+[TEST_CASE_END]
+
+[TEST_CASE eq_len_1]
+left    WYDE #ffff
+right   WYDE #ffff
+len     OCTA 0
+[TEST_CASE_END]
+
+[TEST_CASE eq_part]
+left    WYDE 1,2,#7fff
+right   WYDE 1,2,#7ffe
+len     OCTA 2
+[TEST_CASE_END]
+
+[TEST_CASE eq_all]
+left    WYDE 1,2,3,#ffff
+right   WYDE 1,2,3,#ffff
+len     OCTA 4
+[TEST_CASE_END]
+
+[TEST_CASE ne_pos_0]
+left    WYDE #ffff
+right   WYDE #fffe
+len     OCTA 1
+[TEST_CASE_END]
+
+[TEST_CASE ne_pos_1]
+left    WYDE #7f,#ffff,1
+right   WYDE #7f,#fffe,1
+len     OCTA 3
+[TEST_CASE_END]
+
+[TEST_CASE ne_pos_last]
+left    WYDE 1,2,3,4,5,#7fff
+right   WYDE 1,2,3,4,5,#7ffe
+len     OCTA 6
+[TEST_CASE_END]
+[TEST_SUITE_END]

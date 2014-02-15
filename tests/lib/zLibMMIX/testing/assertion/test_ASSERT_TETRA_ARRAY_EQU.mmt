@@ -1,0 +1,47 @@
+[TEST_SUITE test_ASSERT_ARRAY_TETRA_EQU]
+[TEST_BODY]
+    [ASSERT_TETRA_ARRAY_EQU left,right,len]
+[TEST_BODY_END]
+
+[TEST_CASE eq_len_0]
+left    TETRA #7fffffff
+right   TETRA #7ffeffff
+len     OCTA 0
+[TEST_CASE_END]
+
+[TEST_CASE eq_len_1]
+left    TETRA #7fffffff
+right   TETRA #7fffffff
+len     OCTA 0
+[TEST_CASE_END]
+
+[TEST_CASE eq_part]
+left    TETRA 1,2,#7fffffff
+right   TETRA 1,2,#7ffffffe
+len     OCTA 2
+[TEST_CASE_END]
+
+[TEST_CASE eq_all]
+left    TETRA 1,2,3,#7fffffff
+right   TETRA 1,2,3,#7fffffff
+len     OCTA 4
+[TEST_CASE_END]
+
+[TEST_CASE ne_pos_0]
+left    TETRA #7fffffff
+right   TETRA #7ffffffe
+len     OCTA 1
+[TEST_CASE_END]
+
+[TEST_CASE ne_pos_1]
+left    TETRA #7f,#ffffffff,1
+right   TETRA #7f,#fffffffe,1
+len     OCTA 3
+[TEST_CASE_END]
+
+[TEST_CASE ne_pos_last]
+left    TETRA 1,2,3,4,5,#7fffffff
+right   TETRA 1,2,3,4,5,#7ffffffe
+len     OCTA 6
+[TEST_CASE_END]
+[TEST_SUITE_END]

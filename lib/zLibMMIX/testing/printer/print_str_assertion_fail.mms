@@ -21,7 +21,6 @@ rj_bak          GREG
     SET     str_len,pos_str_len
     PUSHJ   param,:numeric:num_to_str
     SET     pos_str_begin,param
-    PUT     :rJ,rj_bak
 
     LDA     $255,:testing:printer:NEW_LINE
     TRAP    0,:Fputs,:StdOut
@@ -44,5 +43,6 @@ rj_bak          GREG
     LDA     $255,pos_str_begin
     TRAP    0,:Fputs,:StdOut
 
+    PUT     :rJ,rj_bak
     POP     0,0
     PREFIX :

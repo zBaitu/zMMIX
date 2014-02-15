@@ -23,7 +23,7 @@ loop    LDBU    actual_value,actual_value_addr,pos
         CMP     result,actual_value,0
         PBNZ    result,loop
         SET     $0,0
-        POP     0,0
+        POP     1,0
 
 failed  GET     rj_bak,:rJ
         LDA     param+1,ASSERTION_STR
