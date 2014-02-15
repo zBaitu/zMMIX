@@ -941,17 +941,16 @@ COMMENT     (\/\*([^*]|\*+[^/*])*\*+\/)|("//".*\n)
 .
 \n
 {COMMENT}
-{ESC}TEST_TARGET{SP}+{SYM}+{CSE}\n                              {test_target(yytext, yylineno - 1);}
-{ESC}TEST_SUITE{SP}+{SYM}+{CSE}\n                               {test_suite_begin(yytext, yylineno - 1);}
-{ESC}TEST_SUITE_END{CSE}\n                                      {test_suite_end();}
-{ESC}TEST_CASE{SP}+{SYM}+{CSE}\n                                {test_case_begin(yytext, yylineno - 1);}
-{ESC}TEST_CASE_END{CSE}\n                                       {test_case_end(yytext);}
-{ESC}TEST_BODY{CSE}\n                                           {test_body_begin(yytext, yylineno - 1);}
-{ESC}TEST_BODY_END{CSE}\n                                       {test_body_end(yytext);}
-{ESC}ASSERT_{UPPER_SYM}+{SP}+{SYM}+(,{SYM}+)*{CSE}\n            {assertion(yytext, yylineno - 1);}
-{ESC}.*{CSE}                                                    {process_error("label error: %s\n", yytext);}
-<<EOF>>                                                         {generate_test_mms_file(TEST_MMT_FILE_NAME);
-                                                                yyterminate();}
+{ESC}TEST_TARGET{SP}+{SYM}+{CSE}\n                      {test_target(yytext, yylineno - 1);}
+{ESC}TEST_SUITE{SP}+{SYM}+{CSE}\n                       {test_suite_begin(yytext, yylineno - 1);}
+{ESC}TEST_SUITE_END{CSE}\n                              {test_suite_end();}
+{ESC}TEST_CASE{SP}+{SYM}+{CSE}\n                        {test_case_begin(yytext, yylineno - 1);}
+{ESC}TEST_CASE_END{CSE}\n                               {test_case_end(yytext);}
+{ESC}TEST_BODY{CSE}\n                                   {test_body_begin(yytext, yylineno - 1);}
+{ESC}TEST_BODY_END{CSE}\n                               {test_body_end(yytext);}
+{ESC}ASSERT_{UPPER_SYM}+{SP}+{SYM}+(,{SYM}+)*{CSE}\n    {assertion(yytext, yylineno - 1);}
+{ESC}.*{CSE}                                            {process_error("label error: %s\n", yytext);}
+<<EOF>>                                                 {generate_test_mms_file(TEST_MMT_FILE_NAME); yyterminate();}
 %%
 
 static void usage(void)
