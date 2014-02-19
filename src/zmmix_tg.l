@@ -932,7 +932,7 @@ SP          [[:blank:]]
 ESC         \[
 CSE         \]
 UPPER_SYM   [_A-Z]
-SYM         [_A-Za-z0-9]
+SYM         [_:A-Za-z0-9]
 COMMENT     (\/\*([^*]|\*+[^/*])*\*+\/)|("//".*\n)
 
 %option yylineno

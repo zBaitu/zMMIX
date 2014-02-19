@@ -1,4 +1,5 @@
 [TEST_SUITE test_toupper]
+
 [TEST_BODY]
     LDB     $1,char
     PUSHJ   $0,:char:toupper
@@ -53,4 +54,5 @@ char            BYTE '-'
 actual_value    BYTE
 expected_value  BYTE '-'
 [TEST_CASE_END]
+
 [TEST_SUITE_END]
