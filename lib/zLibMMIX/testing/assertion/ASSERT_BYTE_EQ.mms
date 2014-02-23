@@ -1,7 +1,7 @@
     PREFIX :testing:assertion:
-ASSERT_BYTE_EQ  SET     assert:data_type,BYTE_TYPE
-                SET     assert:is_signed,SIGNED
-                SET     assert:is_equal,EQUAL
-                JMP     assert
+ASSERT_BYTE_EQ  SET assert:data_type,BYTE_TYPE
+                SET assert:sign,SIGNED
+                SET assert:comparer,EQ
+                JMP assert
     PREFIX :
 

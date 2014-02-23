@@ -1,6 +1,7 @@
 char/char
 char/tolower
 char/toupper
+io/print_num
 numeric/num_to_str
 numeric/unsigned_num_to_str
 testing/assertion/assertion
