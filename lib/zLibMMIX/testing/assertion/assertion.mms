@@ -1,0 +1,12 @@
+    PREFIX :testing:assertion:
+BYTE_TYPE   IS 0
+WYDE_TYPE   IS 1
+TETRA_TYPE  IS 2
+OCTA_TYPE   IS 3
+
+SIGNED      IS 0
+UNSIGNED    IS 1
+
+EQUAL       IS 0
+NOT_EQUAL   IS 1
+    PREFIX :
