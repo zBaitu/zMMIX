@@ -9,6 +9,7 @@ num     IS param+1
 str     IS param+2
 str_len IS param+3
 
+                    GREG @
 actual_str_begin    GREG
 expected_str_begin  GREG
 actual_value_str    BYTE "                    ",#a,0

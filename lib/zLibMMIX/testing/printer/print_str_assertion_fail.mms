@@ -9,6 +9,7 @@ num     IS param+1
 str     IS param+2
 str_len IS param+3
 
+                GREG @
 pos_str_begin   GREG
 pos_str         BYTE    "                    ",#a,0
 pos_str_len     IS      20

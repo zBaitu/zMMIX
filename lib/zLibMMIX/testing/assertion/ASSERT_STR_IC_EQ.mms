@@ -5,7 +5,7 @@ expected_value_addr IS $1
 param   IS $2
 
                     GREG @
-ASSERTION_STR       BYTE "ASSERT_STR_IC_EQ",#a,0
+ASSERTION_STR       BYTE    "ASSERT_STR_IC_EQ",#a,0
 
 pos                 GREG
 actual_value        GREG

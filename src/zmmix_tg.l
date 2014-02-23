@@ -684,10 +684,10 @@ static void generate_data_segment(FILE* test_mms_file, const linked_node_t *test
 
     LIST_FOREACH(test_suite_node)
     {
-        fprintf(test_mms_file, "%s", GREG_BASE_ADDR);
         const test_suite_t *test_suite = GET_TEST_SUITE(test_suite_node);
         const char* test_suite_name = test_suite->name;
         fprintf(test_mms_file, TEST_SUITE_PREFIX_FORMAT, test_suite_name);
+        fprintf(test_mms_file, "%s", GREG_BASE_ADDR);
         fprintf(test_mms_file, TEST_SUITE_NAME_FORMAT, test_suite_name);
 
         const linked_node_t *test_case_node = test_suite->test_case_head;
@@ -695,6 +695,7 @@ static void generate_data_segment(FILE* test_mms_file, const linked_node_t *test
         {
             const test_case_t *test_case = GET_TEST_CASE(test_case_node);
             fprintf(test_mms_file, TEST_CASE_PREFIX_FORMAT, test_suite_name, test_case->name);
+            fprintf(test_mms_file, "%s", GREG_BASE_ADDR);
             fprintf(test_mms_file, TEST_CASE_NAME_FORMAT, test_case->name);
             const code_block_t *code = &test_case->code;
             fwrite(code->begin, 1, code->end - code->begin + 1, test_mms_file);
@@ -949,7 +950,7 @@ COMMENT     (\/\*([^*]|\*+[^/*])*\*+\/)|("//".*\n)
 {ESC}TEST_BODY{CSE}\n                                   {test_body_begin(yytext, yylineno - 1);}
 {ESC}TEST_BODY_END{CSE}\n                               {test_body_end(yytext);}
 {ESC}ASSERT_{UPPER_SYM}+{SP}+{SYM}+(,{SYM}+)*{CSE}\n    {assertion(yytext, yylineno - 1);}
-{ESC}.*{CSE}                                            {process_error("label error: %s\n", yytext);}
+{ESC}.*{CSE}.*                                          {process_error("label error: %s$\n", yytext);}
 <<EOF>>                                                 {generate_test_mms_file(TEST_MMT_FILE_NAME); yyterminate();}
 %%
 
@@ -1039,7 +1040,7 @@ static void free_asssertion(const linked_node_t* assertion_node)
     }
 }
 
-static void free_res()
+static void free_res(void)
 {
     free_test_target(_test_target_head_);
     free_test_suite(_test_suite_head_);

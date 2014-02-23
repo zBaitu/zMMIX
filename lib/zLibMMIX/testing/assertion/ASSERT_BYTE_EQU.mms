@@ -5,8 +5,8 @@ expected_value_addr IS $1
 param   IS $2
 
                     GREG @
-ASSERTION_STR       BYTE "ASSERT_BYTE_EQU",#a,0
-MAX_NUM_STR_LEN     IS 3
+ASSERTION_STR       BYTE    "ASSERT_BYTE_EQU",#a,0
+MAX_NUM_STR_LEN     IS      3
 
 actual_value        GREG
 expected_value      GREG

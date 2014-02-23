@@ -1,5 +1,5 @@
     PREFIX :testing:printer:
-    GREG @
+                GREG @
 ACTURAL_STR     BYTE "actual:   ",0
 EXPECTED_STR    BYTE "expected: ",0
 POS_STR         BYTE "pos:      ",0
