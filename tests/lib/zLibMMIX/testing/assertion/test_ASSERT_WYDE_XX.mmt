@@ -1,0 +1,130 @@
+%
+% EQ
+%
+[TEST_SUITE test_ASSERT_WYDE_EQ]
+
+[TEST_BODY]
+    [ASSERT_WYDE_EQ left,right]
+[TEST_BODY_END]
+
+[TEST_CASE eq]
+left    WYDE 12345
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_eq]
+left    WYDE #8000
+right   WYDE #8001
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% NE
+%
+[TEST_SUITE test_ASSERT_WYDE_NE]
+
+[TEST_BODY]
+    [ASSERT_WYDE_NE left,right]
+[TEST_BODY_END]
+
+[TEST_CASE ne]
+left    WYDE 12344
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_ne]
+left    WYDE #8000
+right   WYDE #8000
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LT
+%
+[TEST_SUITE test_ASSERT_WYDE_LT]
+
+[TEST_BODY]
+    [ASSERT_WYDE_LT left,right]
+[TEST_BODY_END]
+
+[TEST_CASE lt]
+left    WYDE 12344
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_lt]
+left    WYDE #8000
+right   WYDE #8000
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LE
+%
+[TEST_SUITE test_ASSERT_WYDE_LE]
+
+[TEST_BODY]
+    [ASSERT_WYDE_LE left,right]
+[TEST_BODY_END]
+
+[TEST_CASE le]
+left    WYDE 12345
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_le]
+left    WYDE #8001
+right   WYDE #8000
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% GT
+%
+[TEST_SUITE test_ASSERT_WYDE_GT]
+
+[TEST_BODY]
+    [ASSERT_WYDE_GT left,right]
+[TEST_BODY_END]
+
+[TEST_CASE gt]
+left    WYDE 12345
+right   WYDE 12344
+[TEST_CASE_END]
+
+[TEST_CASE not_gt]
+left    WYDE #8000
+right   WYDE #8000
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% GE
+%
+[TEST_SUITE test_ASSERT_WYDE_GE]
+
+[TEST_BODY]
+    [ASSERT_WYDE_GE left,right]
+[TEST_BODY_END]
+
+[TEST_CASE ge]
+left    WYDE 12345
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_ge]
+left    WYDE #8000
+right   WYDE #8001
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
