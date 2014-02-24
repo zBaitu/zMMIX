@@ -1,3 +1,6 @@
+%
+% EQ
+%
 [TEST_SUITE test_ASSERT_BYTE_EQ]
 
 [TEST_BODY]
@@ -17,6 +20,9 @@ right   BYTE #81
 [TEST_SUITE_END]
 
 
+%
+% NE
+%
 [TEST_SUITE test_ASSERT_BYTE_NE]
 
 [TEST_BODY]
@@ -30,6 +36,50 @@ right   BYTE 123
 
 [TEST_CASE not_ne]
 left    BYTE #80
+right   BYTE #80
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LT
+%
+[TEST_SUITE test_ASSERT_BYTE_LT]
+
+[TEST_BODY]
+    [ASSERT_BYTE_LT left,right]
+[TEST_BODY_END]
+
+[TEST_CASE lt]
+left    BYTE 122
+right   BYTE 123
+[TEST_CASE_END]
+
+[TEST_CASE not_lt]
+left    BYTE #80
+right   BYTE #80
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LE
+%
+[TEST_SUITE test_ASSERT_BYTE_LE]
+
+[TEST_BODY]
+    [ASSERT_BYTE_LE left,right]
+[TEST_BODY_END]
+
+[TEST_CASE le]
+left    BYTE 122
+right   BYTE 123
+[TEST_CASE_END]
+
+[TEST_CASE not_le]
+left    BYTE #81
 right   BYTE #80
 [TEST_CASE_END]
 

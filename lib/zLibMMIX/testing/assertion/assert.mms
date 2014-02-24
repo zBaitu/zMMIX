@@ -10,11 +10,16 @@ param_max_num_str_len   IS param+4
 
 BYTE_EQ_STR     BYTE "ASSERT_BYTE_EQ",#a,0
 BYTE_NE_STR     BYTE "ASSERT_BYTE_NE",#a,0
+BYTE_LT_STR     BYTE "ASSERT_BYTE_LT",#a,0
+BYTE_LE_STR     BYTE "ASSERT_BYTE_LE",#a,0
+BYTE_GT_STR     BYTE "ASSERT_BYTE_GT",#a,0
+BYTE_GE_STR     BYTE "ASSERT_BYTE_GE",#a,0
 BYTE_EQU_STR    BYTE "ASSERT_BYTE_EQU",#a,0
 BYTE_NEU_STR    BYTE "ASSERT_BYTE_NEU",#a,0
                 LOC (@+7)&-8
 DATA_TYPE_TABLE GREG @
-                OCTA BYTE_EQ_STR,BYTE_NE_STR,BYTE_EQU_STR,BYTE_NEU_STR
+                OCTA BYTE_EQ_STR,BYTE_NE_STR,BYTE_LT_STR,BYTE_LE_STR,BYTE_GT_STR,BYTE_GE_STR
+                OCTA BYTE_EQU_STR,BYTE_NEU_STR
 
 BYTE_MAX_NUM_STR_LEN    BYTE 4
 UBYTE_MAX_NUM_STR_LEN   BYTE 3
@@ -57,6 +62,14 @@ compare CMP     result,actual_value,expected_value
         BZ      result,passed
         JMP     failed
         BNZ     result,passed
+        JMP     failed
+        BN      result,passed
+        JMP     failed
+        BNP     result,passed
+        JMP     failed
+        BP      result,passed
+        JMP     failed
+        BNN     result,passed
 
 failed  GET     rj_bak,:rJ
         SLU     entry,data_type,2

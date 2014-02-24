@@ -9,4 +9,8 @@ UNSIGNED    IS 1
 
 EQ IS 0
 NE IS 1
+LT IS 2
+LE IS 3
+GT IS 4
+GE IS 5
     PREFIX :
