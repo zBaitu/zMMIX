@@ -46,6 +46,19 @@ TETRA_LTU_STR   BYTE "ASSERT_TETRA_LTU",#a,0
 TETRA_LEU_STR   BYTE "ASSERT_TETRA_LEU",#a,0
 TETRA_GTU_STR   BYTE "ASSERT_TETRA_GTU",#a,0
 TETRA_GEU_STR   BYTE "ASSERT_TETRA_GEU",#a,0
+
+OCTA_EQ_STR     BYTE "ASSERT_OCTA_EQ",#a,0
+OCTA_NE_STR     BYTE "ASSERT_OCTA_NE",#a,0
+OCTA_LT_STR     BYTE "ASSERT_OCTA_LT",#a,0
+OCTA_LE_STR     BYTE "ASSERT_OCTA_LE",#a,0
+OCTA_GT_STR     BYTE "ASSERT_OCTA_GT",#a,0
+OCTA_GE_STR     BYTE "ASSERT_OCTA_GE",#a,0
+OCTA_EQU_STR    BYTE "ASSERT_OCTA_EQU",#a,0
+OCTA_NEU_STR    BYTE "ASSERT_OCTA_NEU",#a,0
+OCTA_LTU_STR    BYTE "ASSERT_OCTA_LTU",#a,0
+OCTA_LEU_STR    BYTE "ASSERT_OCTA_LEU",#a,0
+OCTA_GTU_STR    BYTE "ASSERT_OCTA_GTU",#a,0
+OCTA_GEU_STR    BYTE "ASSERT_OCTA_GEU",#a,0
                 LOC (@+7)&-8
 DATA_TYPE_TABLE GREG @
                 OCTA BYTE_EQ_STR,BYTE_NE_STR,BYTE_LT_STR,BYTE_LE_STR,BYTE_GT_STR,BYTE_GE_STR
@@ -54,6 +67,8 @@ DATA_TYPE_TABLE GREG @
                 OCTA WYDE_EQU_STR,WYDE_NEU_STR,WYDE_LTU_STR,WYDE_LEU_STR,WYDE_GTU_STR,WYDE_GEU_STR
                 OCTA TETRA_EQ_STR,TETRA_NE_STR,TETRA_LT_STR,TETRA_LE_STR,TETRA_GT_STR,TETRA_GE_STR
                 OCTA TETRA_EQU_STR,TETRA_NEU_STR,TETRA_LTU_STR,TETRA_LEU_STR,TETRA_GTU_STR,TETRA_GEU_STR
+                OCTA OCTA_EQ_STR,OCTA_NE_STR,OCTA_LT_STR,OCTA_LE_STR,OCTA_GT_STR,OCTA_GE_STR
+                OCTA OCTA_EQU_STR,OCTA_NEU_STR,OCTA_LTU_STR,OCTA_LEU_STR,OCTA_GTU_STR,OCTA_GEU_STR
 
 BYTE_MAX_NUM_STR_LEN    BYTE 4
 UBYTE_MAX_NUM_STR_LEN   BYTE 3
@@ -61,11 +76,14 @@ WYDE_MAX_NUM_STR_LEN    BYTE 6
 UWYDE_MAX_NUM_STR_LEN   BYTE 5
 TETRA_MAX_NUM_STR_LEN   BYTE 11
 UTETRA_MAX_NUM_STR_LEN  BYTE 10
+OCTA_MAX_NUM_STR_LEN    BYTE 20
+UOCTA_MAX_NUM_STR_LEN   BYTE 20
                         LOC (@+7)&-8
 MAX_NUM_STR_LEN_TABLE   GREG @
                         OCTA BYTE_MAX_NUM_STR_LEN,UBYTE_MAX_NUM_STR_LEN
                         OCTA WYDE_MAX_NUM_STR_LEN,UWYDE_MAX_NUM_STR_LEN
                         OCTA TETRA_MAX_NUM_STR_LEN,UTETRA_MAX_NUM_STR_LEN
+                        OCTA OCTA_MAX_NUM_STR_LEN,UOCTA_MAX_NUM_STR_LEN
 
 data_type       GREG
 sign            GREG
@@ -104,6 +122,12 @@ tmp             GREG
         JMP     compare
         LDTU    actual_value,actual_value_addr
         LDTU    expected_value,expected_value_addr
+        JMP     compare
+        LDO     actual_value,actual_value_addr
+        LDO     expected_value,expected_value_addr
+        JMP     compare
+        LDOU    actual_value,actual_value_addr
+        LDOU    expected_value,expected_value_addr
         JMP     compare
 
 compare CMP     result,actual_value,expected_value
