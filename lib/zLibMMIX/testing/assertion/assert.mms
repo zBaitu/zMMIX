@@ -33,21 +33,39 @@ WYDE_LTU_STR    BYTE "ASSERT_WYDE_LTU",#a,0
 WYDE_LEU_STR    BYTE "ASSERT_WYDE_LEU",#a,0
 WYDE_GTU_STR    BYTE "ASSERT_WYDE_GTU",#a,0
 WYDE_GEU_STR    BYTE "ASSERT_WYDE_GEU",#a,0
+
+TETRA_EQ_STR    BYTE "ASSERT_TETRA_EQ",#a,0
+TETRA_NE_STR    BYTE "ASSERT_TETRA_NE",#a,0
+TETRA_LT_STR    BYTE "ASSERT_TETRA_LT",#a,0
+TETRA_LE_STR    BYTE "ASSERT_TETRA_LE",#a,0
+TETRA_GT_STR    BYTE "ASSERT_TETRA_GT",#a,0
+TETRA_GE_STR    BYTE "ASSERT_TETRA_GE",#a,0
+TETRA_EQU_STR   BYTE "ASSERT_TETRA_EQU",#a,0
+TETRA_NEU_STR   BYTE "ASSERT_TETRA_NEU",#a,0
+TETRA_LTU_STR   BYTE "ASSERT_TETRA_LTU",#a,0
+TETRA_LEU_STR   BYTE "ASSERT_TETRA_LEU",#a,0
+TETRA_GTU_STR   BYTE "ASSERT_TETRA_GTU",#a,0
+TETRA_GEU_STR   BYTE "ASSERT_TETRA_GEU",#a,0
                 LOC (@+7)&-8
 DATA_TYPE_TABLE GREG @
                 OCTA BYTE_EQ_STR,BYTE_NE_STR,BYTE_LT_STR,BYTE_LE_STR,BYTE_GT_STR,BYTE_GE_STR
                 OCTA BYTE_EQU_STR,BYTE_NEU_STR,BYTE_LTU_STR,BYTE_LEU_STR,BYTE_GTU_STR,BYTE_GEU_STR
                 OCTA WYDE_EQ_STR,WYDE_NE_STR,WYDE_LT_STR,WYDE_LE_STR,WYDE_GT_STR,WYDE_GE_STR
                 OCTA WYDE_EQU_STR,WYDE_NEU_STR,WYDE_LTU_STR,WYDE_LEU_STR,WYDE_GTU_STR,WYDE_GEU_STR
+                OCTA TETRA_EQ_STR,TETRA_NE_STR,TETRA_LT_STR,TETRA_LE_STR,TETRA_GT_STR,TETRA_GE_STR
+                OCTA TETRA_EQU_STR,TETRA_NEU_STR,TETRA_LTU_STR,TETRA_LEU_STR,TETRA_GTU_STR,TETRA_GEU_STR
 
 BYTE_MAX_NUM_STR_LEN    BYTE 4
 UBYTE_MAX_NUM_STR_LEN   BYTE 3
 WYDE_MAX_NUM_STR_LEN    BYTE 6
 UWYDE_MAX_NUM_STR_LEN   BYTE 5
+TETRA_MAX_NUM_STR_LEN   BYTE 11
+UTETRA_MAX_NUM_STR_LEN  BYTE 10
                         LOC (@+7)&-8
 MAX_NUM_STR_LEN_TABLE   GREG @
                         OCTA BYTE_MAX_NUM_STR_LEN,UBYTE_MAX_NUM_STR_LEN
                         OCTA WYDE_MAX_NUM_STR_LEN,UWYDE_MAX_NUM_STR_LEN
+                        OCTA TETRA_MAX_NUM_STR_LEN,UTETRA_MAX_NUM_STR_LEN
 
 data_type       GREG
 sign            GREG
@@ -80,6 +98,12 @@ tmp             GREG
         JMP     compare
         LDWU    actual_value,actual_value_addr
         LDWU    expected_value,expected_value_addr
+        JMP     compare
+        LDT     actual_value,actual_value_addr
+        LDT     expected_value,expected_value_addr
+        JMP     compare
+        LDTU    actual_value,actual_value_addr
+        LDTU    expected_value,expected_value_addr
         JMP     compare
 
 compare CMP     result,actual_value,expected_value
