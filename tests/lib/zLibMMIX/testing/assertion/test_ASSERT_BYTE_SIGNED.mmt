@@ -84,3 +84,47 @@ right   BYTE #80
 [TEST_CASE_END]
 
 [TEST_SUITE_END]
+
+
+%
+% GT
+%
+[TEST_SUITE test_ASSERT_BYTE_GT]
+
+[TEST_BODY]
+    [ASSERT_BYTE_GT left,right]
+[TEST_BODY_END]
+
+[TEST_CASE gt]
+left    BYTE 123
+right   BYTE 122
+[TEST_CASE_END]
+
+[TEST_CASE not_gt]
+left    BYTE #80
+right   BYTE #81
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% GE
+%
+[TEST_SUITE test_ASSERT_BYTE_GE]
+
+[TEST_BODY]
+    [ASSERT_BYTE_GE left,right]
+[TEST_BODY_END]
+
+[TEST_CASE ge]
+left    BYTE 123
+right   BYTE 123
+[TEST_CASE_END]
+
+[TEST_CASE not_ge]
+left    BYTE #80
+right   BYTE #81
+[TEST_CASE_END]
+
+[TEST_SUITE_END]

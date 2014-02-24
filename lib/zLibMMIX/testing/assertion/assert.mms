@@ -16,10 +16,14 @@ BYTE_GT_STR     BYTE "ASSERT_BYTE_GT",#a,0
 BYTE_GE_STR     BYTE "ASSERT_BYTE_GE",#a,0
 BYTE_EQU_STR    BYTE "ASSERT_BYTE_EQU",#a,0
 BYTE_NEU_STR    BYTE "ASSERT_BYTE_NEU",#a,0
+BYTE_LTU_STR    BYTE "ASSERT_BYTE_LTU",#a,0
+BYTE_LEU_STR    BYTE "ASSERT_BYTE_LEU",#a,0
+BYTE_GTU_STR    BYTE "ASSERT_BYTE_GTU",#a,0
+BYTE_GEU_STR    BYTE "ASSERT_BYTE_GEU",#a,0
                 LOC (@+7)&-8
 DATA_TYPE_TABLE GREG @
                 OCTA BYTE_EQ_STR,BYTE_NE_STR,BYTE_LT_STR,BYTE_LE_STR,BYTE_GT_STR,BYTE_GE_STR
-                OCTA BYTE_EQU_STR,BYTE_NEU_STR
+                OCTA BYTE_EQU_STR,BYTE_NEU_STR,BYTE_LTU_STR,BYTE_LEU_STR,BYTE_GTU_STR,BYTE_GEU_STR
 
 BYTE_MAX_NUM_STR_LEN    BYTE 4
 UBYTE_MAX_NUM_STR_LEN   BYTE 3
@@ -73,6 +77,7 @@ compare CMP     result,actual_value,expected_value
 
 failed  GET     rj_bak,:rJ
         SLU     entry,data_type,2
+        4ADDU   entry,sign,entry
         2ADDU   entry,sign,entry
         ADDU    entry,entry,comparer
         SLU     entry,entry,3

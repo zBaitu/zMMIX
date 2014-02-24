@@ -1,0 +1,129 @@
+%
+% EQU
+%
+[TEST_SUITE test_ASSERT_BYTE_EQU]
+
+[TEST_BODY]
+    [ASSERT_BYTE_EQU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE eq]
+left    BYTE 255
+right   BYTE 255
+[TEST_CASE_END]
+
+[TEST_CASE ne]
+left    BYTE #ff
+right   BYTE #fe
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% NEU
+%
+[TEST_SUITE test_ASSERT_BYTE_NEU]
+
+[TEST_BODY]
+    [ASSERT_BYTE_NEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE neu]
+left    BYTE 254
+right   BYTE 255
+[TEST_CASE_END]
+
+[TEST_CASE not_neu]
+left    BYTE #ff
+right   BYTE #ff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LTU
+%
+[TEST_SUITE test_ASSERT_BYTE_LTU]
+
+[TEST_BODY]
+    [ASSERT_BYTE_LTU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE ltu]
+left    BYTE 254
+right   BYTE 255
+[TEST_CASE_END]
+
+[TEST_CASE not_ltu]
+left    BYTE #ff
+right   BYTE #ff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LEU
+%
+[TEST_SUITE test_ASSERT_BYTE_LEU]
+
+[TEST_BODY]
+    [ASSERT_BYTE_LEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE leu]
+left    BYTE 255
+right   BYTE 255
+[TEST_CASE_END]
+
+[TEST_CASE not_leu]
+left    BYTE #ff
+right   BYTE #fe
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+%
+% GTU
+%
+[TEST_SUITE test_ASSERT_BYTE_GTU]
+
+[TEST_BODY]
+    [ASSERT_BYTE_GTU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE gtu]
+left    BYTE 255
+right   BYTE 254
+[TEST_CASE_END]
+
+[TEST_CASE not_gtu]
+left    BYTE #ff
+right   BYTE #ff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% GEU
+%
+[TEST_SUITE test_ASSERT_BYTE_GEU]
+
+[TEST_BODY]
+    [ASSERT_BYTE_GEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE geu]
+left    BYTE 255
+right   BYTE 255
+[TEST_CASE_END]
+
+[TEST_CASE not_geu]
+left    BYTE #fe
+right   BYTE #ff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
