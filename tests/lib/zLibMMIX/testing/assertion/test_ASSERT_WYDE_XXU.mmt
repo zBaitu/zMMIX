@@ -1,0 +1,130 @@
+%
+% EQU
+%
+[TEST_SUITE test_ASSERT_WYDE_EQU]
+
+[TEST_BODY]
+    [ASSERT_WYDE_EQU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE equ]
+left    WYDE 12345
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_equ]
+left    WYDE #ffff
+right   WYDE #fffe
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% NEU
+%
+[TEST_SUITE test_ASSERT_WYDE_NEU]
+
+[TEST_BODY]
+    [ASSERT_WYDE_NEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE neu]
+left    WYDE 12344
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_neu]
+left    WYDE #ffff
+right   WYDE #ffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LTU
+%
+[TEST_SUITE test_ASSERT_WYDE_LTU]
+
+[TEST_BODY]
+    [ASSERT_WYDE_LTU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE ltu]
+left    WYDE 12344
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_ltu]
+left    WYDE #ffff
+right   WYDE #ffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LEU
+%
+[TEST_SUITE test_ASSERT_WYDE_LEU]
+
+[TEST_BODY]
+    [ASSERT_WYDE_LEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE leu]
+left    WYDE 12345
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_leu]
+left    WYDE #ffff
+right   WYDE #fffe
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% GTU
+%
+[TEST_SUITE test_ASSERT_WYDE_GTU]
+
+[TEST_BODY]
+    [ASSERT_WYDE_GTU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE gtu]
+left    WYDE 12345
+right   WYDE 12344
+[TEST_CASE_END]
+
+[TEST_CASE not_gtu]
+left    WYDE #ffff
+right   WYDE #ffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% GEU
+%
+[TEST_SUITE test_ASSERT_WYDE_GEU]
+
+[TEST_BODY]
+    [ASSERT_WYDE_GEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE geu]
+left    WYDE 12345
+right   WYDE 12345
+[TEST_CASE_END]
+
+[TEST_CASE not_geu]
+left    WYDE #fffe
+right   WYDE #ffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
