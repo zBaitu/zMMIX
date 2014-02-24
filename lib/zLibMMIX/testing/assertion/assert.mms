@@ -14,12 +14,13 @@ BYTE_EQU_STR    BYTE "ASSERT_BYTE_EQU",#a,0
 BYTE_NEU_STR    BYTE "ASSERT_BYTE_NEU",#a,0
                 LOC (@+7)&-8
 DATA_TYPE_TABLE GREG @
-                OCTA BYTE_EQ_STR,BYTE_NEU_STR,BYTE_EQU_STR,BYTE_NEU_STR
+                OCTA BYTE_EQ_STR,BYTE_NE_STR,BYTE_EQU_STR,BYTE_NEU_STR
 
 BYTE_MAX_NUM_STR_LEN    BYTE 4
+UBYTE_MAX_NUM_STR_LEN   BYTE 3
                         LOC (@+7)&-8
 MAX_NUM_STR_LEN_TABLE   GREG @
-                        OCTA BYTE_MAX_NUM_STR_LEN
+                        OCTA BYTE_MAX_NUM_STR_LEN,UBYTE_MAX_NUM_STR_LEN
 
 data_type       GREG
 sign            GREG
@@ -32,11 +33,11 @@ rj_bak          GREG
 tmp             GREG
 
 :testing:assertion:assert JMP @+4
-        % goto load data entry
         SLU     entry,data_type,2
-        SLU     tmp,sign,1
-        ADDU    entry,entry,tmp 
-        ADDU    entry,entry,comparer
+        2ADDU   entry,data_type,entry
+        2ADDU   entry,sign,entry
+        ADDU    entry,entry,1
+        SLU     entry,entry,2
         SET     tmp,@+12
         ADDU    entry,entry,tmp
         GO      tmp,entry
@@ -55,14 +56,14 @@ ne_cmp  BNZ     result,passed
 
 failed  GET     rj_bak,:rJ
         SLU     entry,data_type,2
-        SLU     tmp,sign,1
-        ADDU    entry,entry,tmp 
+        2ADDU   entry,sign,entry
         ADDU    entry,entry,comparer
+        SLU     entry,entry,3
         LDO     param_assertion_str,DATA_TYPE_TABLE,entry
 
         SLU     entry,data_type,2
-        SLU     tmp,sign,1
-        ADDU    entry,entry,tmp 
+        ADDU    entry,entry,sign
+        SLU     entry,entry,3
         LDO     tmp,MAX_NUM_STR_LEN_TABLE,entry
         LDB     param_max_num_str_len,tmp
 
