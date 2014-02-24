@@ -1,0 +1,130 @@
+%
+% EQU
+%
+[TEST_SUITE test_ASSERT_OCTA_EQU]
+
+[TEST_BODY]
+    [ASSERT_OCTA_EQU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE equ]
+left    OCTA 12345678987654321
+right   OCTA 12345678987654321
+[TEST_CASE_END]
+
+[TEST_CASE not_equ]
+left    OCTA #ffffffffffffffff
+right   OCTA #fffffffffffffffe
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% NEU
+%
+[TEST_SUITE test_ASSERT_OCTA_NEU]
+
+[TEST_BODY]
+    [ASSERT_OCTA_NEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE neu]
+left    OCTA 12345678987654320
+right   OCTA 12345678987654321
+[TEST_CASE_END]
+
+[TEST_CASE not_neu]
+left    OCTA #ffffffffffffffff
+right   OCTA #ffffffffffffffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LTU
+%
+[TEST_SUITE test_ASSERT_OCTA_LTU]
+
+[TEST_BODY]
+    [ASSERT_OCTA_LTU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE ltu]
+left    OCTA 12345678987654320
+right   OCTA 12345678987654321
+[TEST_CASE_END]
+
+[TEST_CASE not_ltu]
+left    OCTA #ffffffffffffffff
+right   OCTA #ffffffffffffffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% LEU
+%
+[TEST_SUITE test_ASSERT_OCTA_LEU]
+
+[TEST_BODY]
+    [ASSERT_OCTA_LEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE leu]
+left    OCTA 12345678987654321
+right   OCTA 12345678987654321
+[TEST_CASE_END]
+
+[TEST_CASE not_leu]
+left    OCTA #ffffffffffffffff
+right   OCTA #fffffffffffffffe
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% GTU
+%
+[TEST_SUITE test_ASSERT_OCTA_GTU]
+
+[TEST_BODY]
+    [ASSERT_OCTA_GTU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE gtu]
+left    OCTA 12345678987654321
+right   OCTA 12345678987654320
+[TEST_CASE_END]
+
+[TEST_CASE not_gtu]
+left    OCTA #ffffffffffffffff
+right   OCTA #ffffffffffffffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% GEU
+%
+[TEST_SUITE test_ASSERT_OCTA_GEU]
+
+[TEST_BODY]
+    [ASSERT_OCTA_GEU left,right]
+[TEST_BODY_END]
+
+[TEST_CASE geu]
+left    OCTA 12345678987654321
+right   OCTA 12345678987654321
+[TEST_CASE_END]
+
+[TEST_CASE not_geu]
+left    OCTA #fffffffffffffffe
+right   OCTA #ffffffffffffffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
