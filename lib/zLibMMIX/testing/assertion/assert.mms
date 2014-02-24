@@ -36,7 +36,7 @@ tmp             GREG
         SLU     entry,data_type,2
         2ADDU   entry,data_type,entry
         2ADDU   entry,sign,entry
-        ADDU    entry,entry,1
+        ADDU    entry,entry,sign
         SLU     entry,entry,2
         SET     tmp,@+12
         ADDU    entry,entry,tmp
@@ -49,10 +49,14 @@ tmp             GREG
         LDBU    expected_value,expected_value_addr
 
 compare CMP     result,actual_value,expected_value
-        BP      comparer,ne_cmp
-eq_cmp  BZ      result,passed
+        SLU     entry,comparer,3
+        SET     tmp,@+12
+        ADDU    entry,entry,tmp
+        GO      tmp,entry
+
+        BZ      result,passed
         JMP     failed
-ne_cmp  BNZ     result,passed
+        BNZ     result,passed
 
 failed  GET     rj_bak,:rJ
         SLU     entry,data_type,2
@@ -75,7 +79,9 @@ failed  GET     rj_bak,:rJ
         JMP     1F
 0H      PUSHJ   param,:testing:printer:print_unsigned_assertion_fail
 1H      PUT     :rJ,rj_bak
+        SET     $0,1
+        POP     1,0
 
-passed  SET     $0,result
+passed  SET     $0,0
         POP     1,0
    PREFIX :

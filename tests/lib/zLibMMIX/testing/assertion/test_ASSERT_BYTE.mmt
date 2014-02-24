@@ -1,0 +1,36 @@
+[TEST_SUITE test_ASSERT_BYTE_EQ]
+
+[TEST_BODY]
+    [ASSERT_BYTE_EQ left,right]
+[TEST_BODY_END]
+
+[TEST_CASE eq]
+left    BYTE 123
+right   BYTE 123
+[TEST_CASE_END]
+
+[TEST_CASE not_eq]
+left    BYTE #80
+right   BYTE #81
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+[TEST_SUITE test_ASSERT_BYTE_NE]
+
+[TEST_BODY]
+    [ASSERT_BYTE_NE left,right]
+[TEST_BODY_END]
+
+[TEST_CASE ne]
+left    BYTE 122
+right   BYTE 123
+[TEST_CASE_END]
+
+[TEST_CASE not_ne]
+left    BYTE #80
+right   BYTE #80
+[TEST_CASE_END]
+
+[TEST_SUITE_END]

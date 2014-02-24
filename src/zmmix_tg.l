@@ -113,13 +113,14 @@ static const char* DATA_SEGMENT_HEAD = \
 "suite_result   GREG\n"
 "case_result    GREG\n"
 "tmp_reg        GREG\n"
-"NEW_LINE       BYTE #a,0\n"
 "TEST_ALL_STR   BYTE \"  TEST_ALL\",0\n"
 "TEST_SUITE_STR BYTE \"  TEST_SUITE\",0\n"
 "TEST_CASE_STR  BYTE \"  TEST_CASE \",0\n"
 "BLANK_STR      BYTE \"        \",0\n"
 "PASSED_STR     BYTE \"[PASSED]\",0\n"
-"FAILED_STR     BYTE \"[FAILED]\",0\n\n";
+"FAILED_STR     BYTE \"[FAILED]\",0\n\n"
+"NEW_LINE       BYTE #a,0\n"
+"SEPARATOR_LINE BYTE \"------------------------------------------------------------\",#a,0\n";
 static const char* TEXT_SEGMENT_HEAD    = "\n   LOC #100\n";
 static const char* MAIN_HEAD            = "Main JMP @+4\n";
 
@@ -179,7 +180,7 @@ static const char*  PRINT_RESULT_FORMAT = \
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":TEST_SUITE_STR");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, "suite_name");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
-    fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
+    fprintf(test_mms_file, PRINT_STR_FORMAT, ":SEPARATOR_LINE");\
     fprintf(test_mms_file, "%s", PREFIX_END);\
     fprintf(test_mms_file, "\n");
 #define GEN_TEST_CASE_BEGIN(test_suite_name, test_case_name)\
@@ -192,6 +193,7 @@ static const char*  PRINT_RESULT_FORMAT = \
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
     fprintf(test_mms_file, "\n");
 #define GEN_TEST_END()\
+    fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
     fprintf(test_mms_file, PRINT_RESULT_FORMAT, ":test_result", ":test_result");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":TEST_ALL_STR");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");
