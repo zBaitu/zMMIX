@@ -102,9 +102,15 @@ static const int    ESC_LEN = 1;
 static test_label_t _context_label_;
 static char         _test_dir_[PATH_MAX];
 static const char*  TEST_MMT_FILE_NAME;
-static const char*  BUILTIN_MMS     = "builtin_mms";
-static const char*  ZLIB_MMIX       = "zLibMMIX";
-static const char*  ASSERTION_DIR   = "testing/assertion";
+static const char*  BUILTIN_MMS         = "builtin_mms";
+static const char*  ZLIB_MMIX           = "zLibMMIX";
+static const char*  ASSERTION_DIR       = "testing/assertion";
+static const char*  ASSERT_BASE         = "assert";
+static const char*  ASSERT              = "ASSERT_TYPE_CMP";
+static const char*  ASSERT_STR_BASE     = "assert_str";
+static const char*  ASSERT_STR          = "ASSERT_STR_CMP";
+static const char*  ASSERT_ARRAY_BASE   = "assert_array";
+static const char*  ASSERT_ARRAY        = "ASSERT_TYPE_ARRAY_CMP";
 
 static const char* DATA_SEGMENT_HEAD = \
 "               LOC Data_Segment\n"
@@ -779,14 +785,38 @@ static void get_zlibmmix_path(char zlibmmix_path[PATH_MAX])
 
 static void generate_assertion(FILE* test_mms_file, const linked_node_t *assertion_node, const char* zlibmmix_path)
 {
-    char assertion_dir[PATH_MAX];
-    snprintf(assertion_dir, PATH_MAX, "%s/%s", zlibmmix_path, ASSERTION_DIR);
+    bool has_assert = false;
+    bool has_assert_str = false;
+    bool has_assert_array = false;
     LIST_FOREACH(assertion_node)
     {
         assertion_t *assertion = GET_ASSERTION(assertion_node);
-        include_mms(test_mms_file, assertion_dir, assertion->name);
+        if (strstr(assertion->name, "STR"))
+            has_assert_str = true;
+        else if (strstr(assertion->name, "ARRAY"))
+            has_assert_array = true;
+        else
+            has_assert = true;
     }
     LIST_FOREACH_END(assertion_node);
+        
+    char assertion_dir[PATH_MAX];
+    snprintf(assertion_dir, PATH_MAX, "%s/%s", zlibmmix_path, ASSERTION_DIR);
+    if (has_assert)
+    {
+        include_mms(test_mms_file, assertion_dir, ASSERT_BASE);
+        include_mms(test_mms_file, assertion_dir, ASSERT);
+    }
+    if (has_assert_str)
+    {
+        include_mms(test_mms_file, assertion_dir, ASSERT_STR_BASE);
+        include_mms(test_mms_file, assertion_dir, ASSERT_STR);
+    }
+    if (has_assert_array)
+    {
+        include_mms(test_mms_file, assertion_dir, ASSERT_ARRAY_BASE);
+        include_mms(test_mms_file, assertion_dir, ASSERT_ARRAY);
+    }
 }
 
 static int get_param_count(const char* param_list)

@@ -8,6 +8,7 @@ param_actual_value      IS param+2
 param_expected_value    IS param+3
 param_max_num_str_len   IS param+4
 
+                GREG @
 BYTE_EQ_STR     BYTE "ASSERT_BYTE_EQ",#a,0
 BYTE_NE_STR     BYTE "ASSERT_BYTE_NE",#a,0
 BYTE_LT_STR     BYTE "ASSERT_BYTE_LT",#a,0
@@ -59,16 +60,16 @@ OCTA_LTU_STR    BYTE "ASSERT_OCTA_LTU",#a,0
 OCTA_LEU_STR    BYTE "ASSERT_OCTA_LEU",#a,0
 OCTA_GTU_STR    BYTE "ASSERT_OCTA_GTU",#a,0
 OCTA_GEU_STR    BYTE "ASSERT_OCTA_GEU",#a,0
-                LOC (@+7)&-8
-DATA_TYPE_TABLE GREG @
-                OCTA BYTE_EQ_STR,BYTE_NE_STR,BYTE_LT_STR,BYTE_LE_STR,BYTE_GT_STR,BYTE_GE_STR
-                OCTA BYTE_EQU_STR,BYTE_NEU_STR,BYTE_LTU_STR,BYTE_LEU_STR,BYTE_GTU_STR,BYTE_GEU_STR
-                OCTA WYDE_EQ_STR,WYDE_NE_STR,WYDE_LT_STR,WYDE_LE_STR,WYDE_GT_STR,WYDE_GE_STR
-                OCTA WYDE_EQU_STR,WYDE_NEU_STR,WYDE_LTU_STR,WYDE_LEU_STR,WYDE_GTU_STR,WYDE_GEU_STR
-                OCTA TETRA_EQ_STR,TETRA_NE_STR,TETRA_LT_STR,TETRA_LE_STR,TETRA_GT_STR,TETRA_GE_STR
-                OCTA TETRA_EQU_STR,TETRA_NEU_STR,TETRA_LTU_STR,TETRA_LEU_STR,TETRA_GTU_STR,TETRA_GEU_STR
-                OCTA OCTA_EQ_STR,OCTA_NE_STR,OCTA_LT_STR,OCTA_LE_STR,OCTA_GT_STR,OCTA_GE_STR
-                OCTA OCTA_EQU_STR,OCTA_NEU_STR,OCTA_LTU_STR,OCTA_LEU_STR,OCTA_GTU_STR,OCTA_GEU_STR
+                    LOC (@+7)&-8
+ASSERTION_STR_TABLE GREG @
+                    OCTA BYTE_EQ_STR,BYTE_NE_STR,BYTE_LT_STR,BYTE_LE_STR,BYTE_GT_STR,BYTE_GE_STR
+                    OCTA BYTE_EQU_STR,BYTE_NEU_STR,BYTE_LTU_STR,BYTE_LEU_STR,BYTE_GTU_STR,BYTE_GEU_STR
+                    OCTA WYDE_EQ_STR,WYDE_NE_STR,WYDE_LT_STR,WYDE_LE_STR,WYDE_GT_STR,WYDE_GE_STR
+                    OCTA WYDE_EQU_STR,WYDE_NEU_STR,WYDE_LTU_STR,WYDE_LEU_STR,WYDE_GTU_STR,WYDE_GEU_STR
+                    OCTA TETRA_EQ_STR,TETRA_NE_STR,TETRA_LT_STR,TETRA_LE_STR,TETRA_GT_STR,TETRA_GE_STR
+                    OCTA TETRA_EQU_STR,TETRA_NEU_STR,TETRA_LTU_STR,TETRA_LEU_STR,TETRA_GTU_STR,TETRA_GEU_STR
+                    OCTA OCTA_EQ_STR,OCTA_NE_STR,OCTA_LT_STR,OCTA_LE_STR,OCTA_GT_STR,OCTA_GE_STR
+                    OCTA OCTA_EQU_STR,OCTA_NEU_STR,OCTA_LTU_STR,OCTA_LEU_STR,OCTA_GTU_STR,OCTA_GEU_STR
 
 BYTE_MAX_NUM_STR_LEN    BYTE 4
 UBYTE_MAX_NUM_STR_LEN   BYTE 3
@@ -101,7 +102,7 @@ tmp             GREG
         2ADDU   entry,sign,entry
         ADDU    entry,entry,sign
         SLU     entry,entry,2
-        SET     tmp,@+12
+        SET     tmp,@+(3<<2)
         ADDU    entry,entry,tmp
         GO      tmp,entry
 
@@ -155,7 +156,7 @@ failed  GET     rj_bak,:rJ
         2ADDU   entry,sign,entry
         ADDU    entry,entry,comparer
         SLU     entry,entry,3
-        LDO     param_assertion_str,DATA_TYPE_TABLE,entry
+        LDO     param_assertion_str,ASSERTION_STR_TABLE,entry
 
         SLU     entry,data_type,1
         ADDU    entry,entry,sign

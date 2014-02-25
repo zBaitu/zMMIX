@@ -5,7 +5,6 @@ io/print_num
 numeric/num_to_str
 numeric/unsigned_num_to_str
 testing/assertion/assertion
-testing/assertion/assert
 testing/printer/printer
 testing/printer/print_assertion_fail
 testing/printer/print_unsigned_assertion_fail
