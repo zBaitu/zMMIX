@@ -1,0 +1,29 @@
+[TEST_SUITE test_toupper]
+
+[TEST_BODY]
+    LDA     $1,string
+    PUSHJ   $0,:string:toupper
+    [ASSERT_STR_EQ string,expected_value]
+[TEST_BODY_END]
+
+[TEST_CASE lower]
+string          BYTE "abcdefghijklmnopqrstuvwxyz",0
+expected_value  BYTE "ABCDEFGHIJKLMNOPQRSTUVWXYZ",0
+[TEST_CASE_END]
+
+[TEST_CASE upper]
+string          BYTE "ABCDEFGHIJKLMNOPQRSTUVWXYZ",0
+expected_value  BYTE "ABCDEFGHIJKLMNOPQRSTUVWXYZ",0
+[TEST_CASE_END]
+
+[TEST_CASE lower_and_upper]
+string          BYTE "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",0
+expected_value  BYTE "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ",0
+[TEST_CASE_END]
+
+[TEST_CASE other_string]
+string          BYTE "`{9",0
+expected_value  BYTE "`{9",0
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
