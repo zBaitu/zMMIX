@@ -2,11 +2,7 @@
 actual_value_addr   IS $0
 expected_value_addr IS $1
 
-param               IS $2
-param_assertion_str IS param+1
-param_actual_str    IS param+2
-param_expected_str  IS param+3
-param_pos           IS param+4
+param IS $2
 
                 GREG @
 STR_EQ_STR      BYTE "ASSERT_STR_EQ",#a,0
@@ -38,7 +34,15 @@ rj_bak          GREG
 tmp             GREG
 
 :testing:assertion:assert_str JMP @+4
-        SLU     entry,comparer,3
+        PBZ     case,begin
+        GET     rj_bak,:rJ 
+        SET     param+1,actual_value_addr
+        PUSHJ   param,:string:tolower
+        SET     param+1,expected_value_addr
+        PUSHJ   param,:string:tolower
+        PUT     :rJ,rj_bak
+
+begin   SLU     entry,comparer,3
         SET     tmp,@+(7<<2)
         ADDU    entry,entry,tmp
 
@@ -72,10 +76,10 @@ failed  GET     rj_bak,:rJ
         2ADDU   entry,case,entry
         ADDU    entry,entry,comparer
         SLU     entry,entry,3
-        LDO     param_assertion_str,ASSERTION_STR_TABLE,entry
-        SET     param_actual_str,actual_value_addr
-        SET     param_expected_str,expected_value_addr
-        SET     param_pos,pos
+        LDO     param+1,ASSERTION_STR_TABLE,entry
+        SET     param+2,actual_value_addr
+        SET     param+3,expected_value_addr
+        SET     param+4,pos
         PUSHJ   param,:testing:printer:print_str_assertion_fail
         PUT     :rJ,rj_bak
         SET     $0,1
