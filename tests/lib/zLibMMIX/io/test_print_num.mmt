@@ -1,0 +1,98 @@
+%
+% signed
+%
+[TEST_SUITE test_print_num_signed]
+
+[TEST_BODY]
+    LDA     $1,num
+    SET     $2,:numeric:SIGNED
+    PUSHJ   $0,:io:print_num
+[TEST_BODY_END]
+
+[TEST_CASE zero]
+num GREG 0
+[TEST_CASE_END]
+
+[TEST_CASE one]
+num GREG 1
+[TEST_CASE_END]
+
+[TEST_CASE minus_one]
+num GREG -1
+[TEST_CASE_END]
+
+[TEST_CASE max_byte]
+num GREG #7f
+[TEST_CASE_END]
+
+[TEST_CASE min_byte]
+num GREG -#80
+[TEST_CASE_END]
+
+[TEST_CASE max_wyde]
+num GREG #7fff
+[TEST_CASE_END]
+
+[TEST_CASE min_wyde]
+num GREG -#8000
+[TEST_CASE_END]
+
+[TEST_CASE max_tetra]
+num GREG #7fffffff
+[TEST_CASE_END]
+
+[TEST_CASE min_tetra]
+num GREG -#80000000
+[TEST_CASE_END]
+
+[TEST_CASE max_octa]
+num GREG #7fffffffffffffff
+[TEST_CASE_END]
+
+[TEST_CASE min_octa]
+num GREG #8000000000000000
+[TEST_CASE_END]
+
+[TEST_SUITE_END]
+
+
+%
+% unsigned
+%
+[TEST_SUITE test_print_num_unsigned]
+
+[TEST_BODY]
+    LDA     $1,num
+    SET     $2,:numeric:UNSIGNED
+    PUSHJ   $0,:io:print_num
+[TEST_BODY_END]
+
+[TEST_CASE zero]
+num GREG 0
+[TEST_CASE_END]
+
+[TEST_CASE one]
+num GREG 1
+[TEST_CASE_END]
+
+[TEST_CASE minus_one]
+num GREG -1
+[TEST_CASE_END]
+
+[TEST_CASE max_byte]
+num GREG #ff
+[TEST_CASE_END]
+
+[TEST_CASE max_wyde]
+num GREG #ffff
+[TEST_CASE_END]
+
+[TEST_CASE max_tetra]
+num GREG #ffffffff
+[TEST_CASE_END]
+
+[TEST_CASE max_octa]
+num GREG #ffffffffffffffff
+[TEST_CASE_END]
+
+[TEST_SUITE_END]

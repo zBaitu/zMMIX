@@ -1,7 +1,7 @@
     PREFIX :char:tolower:
-char    IS $0
+char IS $0
 
-cmp_result  GREG
+cmp_result GREG
 
 :char:tolower   CMP cmp_result,char,:char:UPPER_A
                 BN  cmp_result,return

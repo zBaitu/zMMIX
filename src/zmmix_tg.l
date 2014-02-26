@@ -799,7 +799,7 @@ static void generate_assertion(FILE* test_mms_file, const linked_node_t *asserti
             has_assert = true;
     }
     LIST_FOREACH_END(assertion_node);
-        
+
     char assertion_dir[PATH_MAX];
     snprintf(assertion_dir, PATH_MAX, "%s/%s", zlibmmix_path, ASSERTION_DIR);
     if (has_assert)

@@ -1,7 +1,8 @@
     PREFIX :numeric:num_to_str:
-num IS $0
-str IS $1
-len IS $2
+num     IS $0
+sign    IS $1 
+str     IS $2
+len     IS $3
 
 NEG_CHAR    GREG '-'
 
@@ -9,7 +10,9 @@ is_neg      GREG
 pos         GREG
 remainder   GREG
 
-:numeric:num_to_str CMP     is_neg,num,0
+:numeric:num_to_str SET     is_neg,0
+                    BP      sign,begin
+                    CMP     is_neg,num,0
                     PBNN    is_neg,begin
                     NEGU    num,0,num
 

@@ -5,9 +5,6 @@ expected_str    IS $2
 pos             IS $3
 
 param   IS $4
-num     IS param+1
-str     IS param+2
-str_len IS param+3
 
                 GREG @
 pos_str_begin   GREG
@@ -17,9 +14,10 @@ rj_bak          GREG
 
 :testing:printer:print_str_assertion_fail JMP @+4
     GET     rj_bak,:rJ
-    SET     num,pos
-    LDA     str,pos_str
-    SET     str_len,pos_str_len
+    SET     param+1,pos
+    SET     param+2,:numeric:SIGNED
+    LDA     param+3,pos_str
+    SET     param+4,pos_str_len
     PUSHJ   param,:numeric:num_to_str
     SET     pos_str_begin,param
 

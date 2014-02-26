@@ -1,7 +1,7 @@
     PREFIX :char:toupper:
-char    IS $0
+char IS $0
 
-cmp_result  GREG
+cmp_result GREG
 
 :char:toupper   CMP cmp_result,char,:char:LOWER_A
                 BN  cmp_result,return

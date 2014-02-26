@@ -184,11 +184,9 @@ failed  GET     rj_bak,:rJ
         SET     param+3,expected_value
         SET     param+5,pos
 
-        BP      sign,0F
+        SET     param+6,sign
         PUSHJ   param,:testing:printer:print_array_assertion_fail
-        JMP     1F
-0H      PUSHJ   param,:testing:printer:print_array_unsigned_assertion_fail
-1H      PUT     :rJ,rj_bak
+        PUT     :rJ,rj_bak
         SET     $0,1
         POP     1,0
 

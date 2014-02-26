@@ -3,11 +3,9 @@ assertion_str   IS $0
 actual_value    IS $1
 expected_value  IS $2
 max_str_len     IS $3
+sign            IS $4
 
-param   IS $4
-num     IS param+1
-str     IS param+2
-str_len IS param+3
+param IS $5
 
                     GREG @
 actual_str_begin    GREG
@@ -18,14 +16,16 @@ rj_bak              GREG
 
 :testing:printer:print_assertion_fail JMP @+4
     GET     rj_bak,:rJ
-    SET     num,actual_value
-    LDA     str,actual_value_str
-    SET     str_len,max_str_len
+    SET     param+1,actual_value
+    SET     param+2,sign
+    LDA     param+3,actual_value_str
+    SET     param+4,max_str_len
     PUSHJ   param,:numeric:num_to_str
     SET     actual_str_begin,param
-    SET     num,expected_value
-    LDA     str,expected_value_str
-    SET     str_len,max_str_len
+    SET     param+1,expected_value
+    SET     param+2,sign
+    LDA     param+3,expected_value_str
+    SET     param+4,max_str_len
     PUSHJ   param,:numeric:num_to_str
     SET     expected_str_begin,param
 
