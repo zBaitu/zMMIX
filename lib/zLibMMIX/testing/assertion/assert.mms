@@ -128,7 +128,7 @@ tmp             GREG
 
 compare CMP     result,actual_value,expected_value
         SLU     entry,comparer,3
-        SET     tmp,@+12
+        SET     tmp,@+(3<<2)
         ADDU    entry,entry,tmp
         GO      tmp,entry
 

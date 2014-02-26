@@ -5,7 +5,7 @@ expected_str    IS $2
 pos             IS $3
 param           IS $4
 
-                GREG @
+                GREG    @
 pos_str_begin   GREG
 pos_str         BYTE    "                    ",#a,0
 pos_str_len     IS      20

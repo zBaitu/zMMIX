@@ -145,7 +145,7 @@ loop    CMP     result,pos,len
 
 compare CMP     result,actual_value,expected_value
         SLU     cmp_entry,comparer,3
-        SET     tmp,@+12
+        SET     tmp,@+(3<<2)
         ADDU    cmp_entry,cmp_entry,tmp
         GO      tmp,cmp_entry
 
