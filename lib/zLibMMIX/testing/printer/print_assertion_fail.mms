@@ -4,8 +4,7 @@ actual_value    IS $1
 expected_value  IS $2
 max_str_len     IS $3
 sign            IS $4
-
-param IS $5
+param           IS $5
 
                     GREG @
 actual_str_begin    GREG

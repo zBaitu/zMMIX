@@ -3,8 +3,7 @@ assertion_str   IS $0
 actual_str      IS $1
 expected_str    IS $2
 pos             IS $3
-
-param   IS $4
+param           IS $4
 
                 GREG @
 pos_str_begin   GREG

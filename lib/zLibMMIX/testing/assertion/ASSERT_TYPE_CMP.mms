@@ -129,50 +129,50 @@ ASSERT_TETRA_EQU    SET assert:data_type,TETRA_TYPE
                     SET assert:comparer,EQ
                     JMP assert
 
-ASSERT_TETRA_GE SET assert:data_type,TETRA_TYPE
-                SET assert:sign,SIGNED
-                SET assert:comparer,GE
-                JMP assert
+ASSERT_TETRA_GE     SET assert:data_type,TETRA_TYPE
+                    SET assert:sign,SIGNED
+                    SET assert:comparer,GE
+                    JMP assert
 
 ASSERT_TETRA_GEU    SET assert:data_type,TETRA_TYPE
                     SET assert:sign,UNSIGNED
                     SET assert:comparer,GE
                     JMP assert
 
-ASSERT_TETRA_GT SET assert:data_type,TETRA_TYPE
-                SET assert:sign,SIGNED
-                SET assert:comparer,GT
-                JMP assert
+ASSERT_TETRA_GT     SET assert:data_type,TETRA_TYPE
+                    SET assert:sign,SIGNED
+                    SET assert:comparer,GT
+                    JMP assert
 
 ASSERT_TETRA_GTU    SET assert:data_type,TETRA_TYPE
                     SET assert:sign,UNSIGNED
                     SET assert:comparer,GT
                     JMP assert
 
-ASSERT_TETRA_LE SET assert:data_type,TETRA_TYPE
-                SET assert:sign,SIGNED
-                SET assert:comparer,LE
-                JMP assert
+ASSERT_TETRA_LE     SET assert:data_type,TETRA_TYPE
+                    SET assert:sign,SIGNED
+                    SET assert:comparer,LE
+                    JMP assert
 
 ASSERT_TETRA_LEU    SET assert:data_type,TETRA_TYPE
                     SET assert:sign,UNSIGNED
                     SET assert:comparer,LE
                     JMP assert
 
-ASSERT_TETRA_LT SET assert:data_type,TETRA_TYPE
-                SET assert:sign,SIGNED
-                SET assert:comparer,LT
-                JMP assert
+ASSERT_TETRA_LT     SET assert:data_type,TETRA_TYPE
+                    SET assert:sign,SIGNED
+                    SET assert:comparer,LT
+                    JMP assert
 
 ASSERT_TETRA_LTU    SET assert:data_type,TETRA_TYPE
                     SET assert:sign,UNSIGNED
                     SET assert:comparer,LT
                     JMP assert
 
-ASSERT_TETRA_NE SET assert:data_type,TETRA_TYPE
-                SET assert:sign,SIGNED
-                SET assert:comparer,NE
-                JMP assert
+ASSERT_TETRA_NE     SET assert:data_type,TETRA_TYPE
+                    SET assert:sign,SIGNED
+                    SET assert:comparer,NE
+                    JMP assert
 
 ASSERT_TETRA_NEU    SET assert:data_type,TETRA_TYPE
                     SET assert:sign,UNSIGNED

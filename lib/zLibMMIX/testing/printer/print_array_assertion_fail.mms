@@ -5,14 +5,13 @@ expected_value  IS $2
 max_str_len     IS $3
 pos             IS $4
 sign            IS $5
+param           IS $6
 
-param   IS $6
-
-                    GREG @
-pos_str_begin       GREG
-pos_str             BYTE    "                    ",#a,0
-pos_str_len         IS      20
-rj_bak              GREG
+                GREG    @
+pos_str_begin   GREG
+pos_str         BYTE    "                    ",#a,0
+pos_str_len     IS      20
+rj_bak          GREG
 
 :testing:printer:print_array_assertion_fail JMP @+4
     GET     rj_bak,:rJ

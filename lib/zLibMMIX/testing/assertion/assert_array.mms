@@ -2,8 +2,7 @@
 actual_value_addr   IS $0
 expected_value_addr IS $1
 len_addr            IS $2
-
-param IS $3
+param               IS $3
 
                 GREG @
 BYTE_EQ_STR     BYTE "ASSERT_BYTE_ARRAY_EQ",#a,0
@@ -173,17 +172,14 @@ failed  GET     rj_bak,:rJ
         ADDU    table_entry,table_entry,comparer
         SLU     table_entry,table_entry,3
         LDO     param+1,ASSERTION_STR_TABLE,table_entry
-
+        SET     param+2,actual_value
+        SET     param+3,expected_value
         SLU     table_entry,data_type,1
         ADDU    table_entry,table_entry,sign
         SLU     table_entry,table_entry,3
         LDO     tmp,MAX_NUM_STR_LEN_TABLE,table_entry
         LDB     param+4,tmp
-
-        SET     param+2,actual_value
-        SET     param+3,expected_value
         SET     param+5,pos
-
         SET     param+6,sign
         PUSHJ   param,:testing:printer:print_array_assertion_fail
         PUT     :rJ,rj_bak

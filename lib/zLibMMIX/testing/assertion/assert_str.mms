@@ -1,8 +1,7 @@
     PREFIX :testing:assertion:assert_str:
 actual_value_addr   IS $0
 expected_value_addr IS $1
-
-param IS $2
+param               IS $2
 
                 GREG @
 STR_EQ_STR      BYTE "ASSERT_STR_EQ",#a,0

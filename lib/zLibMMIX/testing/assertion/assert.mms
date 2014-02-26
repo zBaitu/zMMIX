@@ -1,12 +1,7 @@
     PREFIX :testing:assertion:assert:
 actual_value_addr   IS $0
 expected_value_addr IS $1
-
-param                   IS $2
-param_assertion_str     IS param+1
-param_actual_value      IS param+2
-param_expected_value    IS param+3
-param_max_num_str_len   IS param+4
+param               IS $2
 
                 GREG @
 BYTE_EQ_STR     BYTE "ASSERT_BYTE_EQ",#a,0
@@ -156,17 +151,14 @@ failed  GET     rj_bak,:rJ
         2ADDU   entry,sign,entry
         ADDU    entry,entry,comparer
         SLU     entry,entry,3
-        LDO     param_assertion_str,ASSERTION_STR_TABLE,entry
-
+        LDO     param+1,ASSERTION_STR_TABLE,entry
+        SET     param+2,actual_value
+        SET     param+3,expected_value
         SLU     entry,data_type,1
         ADDU    entry,entry,sign
         SLU     entry,entry,3
         LDO     tmp,MAX_NUM_STR_LEN_TABLE,entry
-        LDB     param_max_num_str_len,tmp
-
-        SET     param_actual_value,actual_value
-        SET     param_expected_value,expected_value
-
+        LDB     param+4,tmp
         SET     param+5,sign
         PUSHJ   param,:testing:printer:print_assertion_fail
         PUT     :rJ,rj_bak

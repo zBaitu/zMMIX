@@ -1,6 +1,6 @@
     PREFIX :numeric:num_to_str:
 num     IS $0
-sign    IS $1 
+sign    IS $1
 str     IS $2
 len     IS $3
 

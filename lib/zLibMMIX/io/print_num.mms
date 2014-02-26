@@ -1,8 +1,7 @@
     PREFIX :io:print_num:
 num     IS $0
 sign    IS $1
-
-param IS $1
+param   IS $2
 
         GREG @
 str     BYTE "                    ",#a,0
