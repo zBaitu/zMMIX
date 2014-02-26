@@ -152,8 +152,10 @@ static const char*  PRINT_RESULT_FORMAT = \
 "   LDA     :tmp_reg,:PASSED_STR\n"
 "   CMP     $0,%s,0\n"
 "   CSZ     $255,$0,:tmp_reg\n"
-"   TRAP    0,:Fputs,:StdOut\n"
-"   SET     %s,0\n";
+"   TRAP    0,:Fputs,:StdOut\n";
+static const char*  HALT = \
+"   SET     $255,:test_result\n"
+"   TRAP    0,:Halt,0\n";
 
 #define LIST_FORWARD(node)              node = &(*node)->next
 #define LIST_FOREACH(node)              while (node) {
@@ -202,7 +204,8 @@ static const char*  PRINT_RESULT_FORMAT = \
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
     fprintf(test_mms_file, PRINT_RESULT_FORMAT, ":test_result", ":test_result");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":TEST_ALL_STR");\
-    fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");
+    fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
+    fprintf(test_mms_file, "%s", HALT);
 
 static char* str_rm_suffix(const char* src, char* dest, size_t len)
 {

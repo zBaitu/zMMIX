@@ -1,4 +1,6 @@
 char/char
+char/tolower
+char/toupper
 io/print_num
 numeric/numeric
 numeric/num_to_str
