@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 typedef enum test_label_t
 {
@@ -1019,7 +1020,6 @@ static void free_test_body(test_body_t *test_body)
         if (code->code_type == ASSERTION_CALL)
         {
             const assertion_call_t *assertion_call = GET_ASSERTION_CALL(code);
-            free((void*)assertion_call->name);
             free(assertion_call->param_list);
         }
         free((void*)code);

@@ -34,7 +34,7 @@ tmp             GREG
 
 :testing:assertion:assert_str JMP @+4
         PBZ     case,begin
-        GET     rj_bak,:rJ 
+        GET     rj_bak,:rJ
         SET     param+1,actual_value_addr
         PUSHJ   param,:string:tolower
         SET     param+1,expected_value_addr
