@@ -95,9 +95,9 @@ typedef struct code_buffer_t
     size_t  size;
 }code_buffer_t;
 
-static linked_node_t *_test_target_head_,   **_cur_test_target_ = &_test_target_head_;
-static linked_node_t *_test_suite_head_,    **_cur_test_suite_  = &_test_suite_head_;
-static linked_node_t *_assertion_head_,     **_cur_assertion_   = &_assertion_head_;
+static linked_node_t *__test_target_head__, **__cur_test_target__   = &__test_target_head__;
+static linked_node_t *__test_suite_head__,  **__cur_test_suite__    = &__test_suite_head__;
+static linked_node_t *__assertion_head__,   **__cur_assertion__     = &__assertion_head__;
 
 static const int    ESC_LEN = 1;
 static test_label_t _context_label_;
@@ -172,7 +172,7 @@ static const char*  HALT = \
 #define GET_CODE(node)                  ((code_t*)(node)->data)
 #define GET_CODE_BLOCK(code)            ((code_block_t*)(&code->code_block))
 #define GET_ASSERTION_CALL(code)        ((assertion_call_t*)(&code->assertion_call))
-#define GET_CUR_TEST_SUITE()            GET_TEST_SUITE(*_cur_test_suite_)
+#define GET_CUR_TEST_SUITE()            GET_TEST_SUITE(*__cur_test_suite__)
 #define GET_CUR_TEST_CASE(test_suite)   GET_TEST_CASE(*test_suite->cur_test_case)
 #define GET_CUR_TEST_BODY()             GET_CUR_TEST_SUITE()->test_body
 
@@ -427,7 +427,7 @@ static const test_target_t* create_test_target(const char* name, int line)
 static void add_test_target(const char* name, int line)
 {
     const test_target_t *test_target = create_test_target(name, line);
-    list_add(&_cur_test_target_, test_target);
+    list_add(&__cur_test_target__, test_target);
 }
 
 static void test_target(const char* text, int line)
@@ -435,7 +435,7 @@ static void test_target(const char* text, int line)
     check_context(TEST_TARGET, line);
 
     const char* name = get_param_list(text);
-    check_duplicated(TEST_TARGET, _test_target_head_, name);
+    check_duplicated(TEST_TARGET, __test_target_head__, name);
     add_test_target(name, line);
 }
 
@@ -452,7 +452,7 @@ static test_suite_t* create_test_suite(const char* name, int line)
 static void add_test_suite(const char* name, int line)
 {
     test_suite_t *test_suite = create_test_suite(name, line);
-    *_cur_test_suite_ = create_linked_node(test_suite);
+    *__cur_test_suite__ = create_linked_node(test_suite);
 }
 
 static void test_suite_begin(const char* text, int line)
@@ -461,13 +461,13 @@ static void test_suite_begin(const char* text, int line)
     ADD_CONTEXT_LABEL(TEST_SUITE_BEGIN);
 
     const char* name = get_param_list(text);
-    check_duplicated(TEST_SUITE_BEGIN, _test_suite_head_, name);
+    check_duplicated(TEST_SUITE_BEGIN, __test_suite_head__, name);
     add_test_suite(name, line);
 }
 
 static void test_suite_end(void)
 {
-    LIST_FORWARD(_cur_test_suite_);
+    LIST_FORWARD(__cur_test_suite__);
     RM_CONTEXT_LABEL(TEST_SUITE_BEGIN);
 }
 
@@ -579,11 +579,11 @@ static const assertion_t* create_assertion(const char* name)
 static const assertion_t* get_or_create_assertion(const char* assertion_begin)
 {
     const char* name = get_key(assertion_begin);
-    const assertion_t *assertion = list_find(_assertion_head_, name);
+    const assertion_t *assertion = list_find(__assertion_head__, name);
     if (!assertion)
     {
         assertion = create_assertion(name);
-        list_add(&_cur_assertion_, assertion);
+        list_add(&__cur_assertion__, assertion);
     }
     else
     {
@@ -629,7 +629,7 @@ static void debug(const char* test_mmt_file_name)
     printf("%s\n", test_mmt_file_name);
 
     printf("----------test_target begin----------\n");
-    linked_node_t *test_target_node = _test_target_head_;
+    linked_node_t *test_target_node = __test_target_head__;
     LIST_FOREACH(test_target_node)
     {
         test_target_t *test_target = GET_TEST_TARGET(test_target_node);
@@ -639,7 +639,7 @@ static void debug(const char* test_mmt_file_name)
     printf("----------test_target end----------\n\n");
 
     printf("----------test_suite begin----------\n");
-    linked_node_t *test_suite_node = _test_suite_head_;
+    linked_node_t *test_suite_node = __test_suite_head__;
     LIST_FOREACH(test_suite_node)
     {
         test_suite_t *test_suite = GET_TEST_SUITE(test_suite_node);
@@ -959,8 +959,8 @@ static void generate_test_mms_file(const char* test_mmt_file_name)
     if (!test_mms_file)
         process_error("fopen(%s, \"w\") error: %m\n", test_mms_file_name);
 
-    generate_data_segment(test_mms_file, _test_suite_head_);
-    generate_text_segment(test_mms_file, _test_target_head_, _assertion_head_, _test_suite_head_);
+    generate_data_segment(test_mms_file, __test_suite_head__);
+    generate_text_segment(test_mms_file, __test_target_head__, __assertion_head__, __test_suite_head__);
     fclose(test_mms_file);
 }
 %}
@@ -1020,6 +1020,7 @@ static void free_test_body(test_body_t *test_body)
         if (code->code_type == ASSERTION_CALL)
         {
             const assertion_call_t *assertion_call = GET_ASSERTION_CALL(code);
+            /* DO NOT free for assertion_call->name, it's only the address of assertion->name. */
             free(assertion_call->param_list);
         }
         free((void*)code);
@@ -1077,9 +1078,9 @@ static void free_asssertion(const linked_node_t* assertion_node)
 
 static void free_res(void)
 {
-    free_test_target(_test_target_head_);
-    free_test_suite(_test_suite_head_);
-    free_asssertion(_assertion_head_);
+    free_test_target(__test_target_head__);
+    free_test_suite(__test_suite_head__);
+    free_asssertion(__assertion_head__);
 }
 
 static void compile(const char* test_file_name)
