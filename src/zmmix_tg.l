@@ -128,6 +128,7 @@ static const char* DATA_SEGMENT_HEAD = \
 "FAILED_STR     BYTE \"[FAILED]\",0\n\n"
 "NEW_LINE       BYTE #a,0\n"
 "SEPARATOR_LINE BYTE \"------------------------------------------------------------\",#a,0\n";
+static const char* SET_FORMAT           = "     SET %s,%s\n";
 static const char* TEXT_SEGMENT_HEAD    = "\n   LOC #100\n";
 static const char* MAIN_HEAD            = "Main JMP @+4\n";
 
@@ -182,6 +183,7 @@ static const char*  HALT = \
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":TEST_SUITE_STR");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, "suite_name");\
     fprintf(test_mms_file, PRINT_STR_FORMAT, ":NEW_LINE");\
+    fprintf(test_mms_file, SET_FORMAT, ":suite_result", "0");\
     fprintf(test_mms_file, "\n");
 #define GEN_TEST_SUITE_END(test_suite_name)\
     fprintf(test_mms_file, TEST_SUITE_PREFIX_FORMAT, test_suite_name);\
@@ -193,7 +195,8 @@ static const char*  HALT = \
     fprintf(test_mms_file, "%s", PREFIX_END);\
     fprintf(test_mms_file, "\n");
 #define GEN_TEST_CASE_BEGIN(test_suite_name, test_case_name)\
-    fprintf(test_mms_file, TEST_CASE_PREFIX_FORMAT, test_suite_name, test_case_name);
+    fprintf(test_mms_file, TEST_CASE_PREFIX_FORMAT, test_suite_name, test_case_name);\
+    fprintf(test_mms_file, SET_FORMAT, ":case_result", "0");
 #define GEN_TEST_CASE_END()\
     fprintf(test_mms_file, "%s", AFTER_ASSERTION_CALL_FORMAT);\
     fprintf(test_mms_file, PRINT_RESULT_FORMAT, ":case_result", ":case_result");\
