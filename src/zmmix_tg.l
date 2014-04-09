@@ -1099,11 +1099,17 @@ static void compile(const char* test_file_name)
     if (file_size == -1)
         process_error("get_file_size(%s) error", test_file_name);
 
-    YY_BUFFER_STATE file_buffer = yy_create_buffer(test_file, file_size);
-    yy_switch_to_buffer(file_buffer);
-    yylex();
-    yy_delete_buffer(file_buffer);
+    char* file_buffer = zmalloc(file_size + 2);
+    fread(file_buffer, 1, file_size, test_file);
+    file_buffer[file_size] = '\0';
+    file_buffer[file_size + 1] = '\0';
 
+    YY_BUFFER_STATE buffer_state = yy_scan_buffer(file_buffer, file_size + 2);
+    yy_switch_to_buffer(buffer_state);
+    yylex();
+    yy_delete_buffer(buffer_state);
+
+    free(file_buffer);
     fclose(test_file);
     free_res();
 }
