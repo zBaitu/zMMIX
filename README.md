@@ -44,7 +44,7 @@ There 4 pair test label:
 * [TEST_TARGET] use to specify the testing mms program. **mms_file_name only contains file name, WITHOUT SUFFIX.**
 * [TEST_SUITE] use to define a test suite, it can contains only one [TEST_BODY] or none, and it can contains zero or more [TEST_CASE].
 * [TEST_BODY] use to define a call routine. It use test data from every [TEST_CASE] and make them as parameter of calling function. It can contains more than one assertion. Like mms program, instruction must be written on second column.
-* [TEST_CASE] use to define test data, instruction is not allowed. **BE CAREFUL, for easy implemention of the assertion of the framework, data defined in [TEST_CASE] must has real address in memory. So the presudo-instruction IS, GREG is not allowed to define data that will be use in assertion. Use only for parameter is OK.**  
+* [TEST_CASE] use to define test data, instruction is not allowed. **BE CAREFUL, for easy implemention of the assertion of the framework, data defined in [TEST_CASE] that will use in assertion must has real address in memory. So the presudo-instruction IS, GREG is not allowed to define data that will be use in assertion. Use only for parameter is OK.**  
 
 **!!!NO SPACE ALLOWD NEAR [], AND ONE TEST LABEL ONE LINE!!!**
 
